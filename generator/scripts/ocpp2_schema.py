@@ -112,8 +112,8 @@ class Object:
 
     def __enum_payload(self, enum_name, desc):
         ret = ""
-        ret += "    SCHEMA_SET(%s,\\\n        %s);\n" %(enum_name[:-4], munge_enum(",".join(desc["enum"]), "        "))
-        ret += "    using %s=schema_set_value<%s>;\n" %(enum_name,enum_name[:-4])
+        ret += "    SCHEMA_ENUM(%s,\\\n        %s);\n" %(enum_name[:-4], munge_enum(",".join(desc["enum"]), "        "))
+        ret += "    using %s=schema_enum_value<%s>;\n" %(enum_name,enum_name[:-4])
         ret += "\n"
         return ret
  
@@ -126,8 +126,8 @@ class Enum:
         self.__do_work()
 
     def __do_work(self):
-        self.payload += "SCHEMA_SET(%s,\\\n    %s);\n" %(self.name[:-4], munge_enum(",".join(self.attributes["enum"])))
-        self.payload += "using %s=schema_set_value<%s>;\n\n" %(self.name,self.name[:-4])
+        self.payload += "SCHEMA_ENUM(%s,\\\n    %s);\n" %(self.name[:-4], munge_enum(",".join(self.attributes["enum"])))
+        self.payload += "using %s=schema_enum_value<%s>;\n\n" %(self.name,self.name[:-4])
     
 class Scheme:
     def __init__(self, **kwargs):
@@ -169,7 +169,7 @@ class HeaderFile:
         self.file.write("template<std::size_t MaxSize, std::size_t MinSize=1>\n");
         self.file.write("using schema_string=cereal::schema_string<MaxSize, MinSize>;\n\n")
         self.file.write("template<typename SchemaSet>\n")
-        self.file.write("using schema_set_value=cereal::schema_set_value<SchemaSet>;\n\n")
+        self.file.write("using schema_enum_value=cereal::schema_enum_value<SchemaSet>;\n\n")
         self.file.write("using date_time=std::string;\n\n")
         self.file.write("using schema_boolean=cereal::schema_boolean;\n\n")
 
