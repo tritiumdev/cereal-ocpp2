@@ -1,0 +1,4 @@
+From the protocol directory:
+
+   ./scripts/schema-to-cpp-header.py --input=../schemas/AuthorizeResponse_v1p0.json --output=authorize_response.hpp --namespace=tritium --namespace=ocpp2 --namespace=protocol  --include="\"cereal_enum.hpp\"" 20180906_23:12:37 1
+   ./scripts/schema-to-cpp-header.py --input=../schemas/AuthorizeRequest_v1p0.json --output=authorize_request.hpp --namespace=tritium --namespace=ocpp2 --namespace=protocol  --include="\"cereal_enum.hpp\"" 20180906_23:12:37 1
