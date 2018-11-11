@@ -1,0 +1,68 @@
+#pragma once
+
+/**
+*
+* This file is auto generated using this exact command:
+*     ../../generator/scripts/schema-to-cpp-header2.py
+*     --input-dir=../../schemas/schemas
+*     --namespace=lgpl3
+*     --namespace=ocpp20
+*     --include=<cereal/types/vector.hpp>
+*     --include="../cereal/cereal_ext.hpp"
+*     --include="../cereal/schema_enum.hpp"
+*     --include="../cereal/schema_string.hpp"
+*
+*/
+
+#include <cereal/types/vector.hpp>
+#include "../cereal/cereal_ext.hpp"
+#include "../cereal/schema_enum.hpp"
+#include "../cereal/schema_string.hpp"
+#include <vector>
+#include "./common.hpp"
+
+namespace lgpl3 { namespace ocpp20 { 
+
+SCHEMA_ENUM(SetVariableStatusEnum,\
+    Accepted,\
+    Rejected,\
+    InvalidValue,\
+    UnknownComponent,\
+    UnknownVariable,\
+    NotSupportedAttributeType,\
+    OutOfRange,\
+    RebootRequired);
+using SetVariableStatusEnumType=schema_enum_value<SetVariableStatusEnum>;
+
+struct SetVariableResultType
+{
+    SetVariableStatusEnumType attributeStatus;
+    optional<AttributeEnumType> attributeType;
+    ComponentType component;
+    VariableType variable;
+
+    template<typename Archive>
+    void serialize(Archive& archive)
+    {
+        cereal::nvp(archive, "attributeStatus", attributeStatus);
+        cereal::nvp(archive, "attributeType", attributeType);
+        cereal::nvp(archive, "component", component);
+        cereal::nvp(archive, "variable", variable);
+    }
+};
+
+struct SetVariablesResponse
+{
+    std::vector<SetVariableResultType> setVariableResult;
+
+    template<typename Archive>
+    void serialize(Archive& archive)
+    {
+        cereal::nvp(archive, "setVariableResult", setVariableResult);
+    }
+};
+
+
+
+} } 
+

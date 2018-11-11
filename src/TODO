@@ -1,0 +1,48 @@
+
+# TODO
+
+This library is actually not complete.
+
+## C++ side
+
+ - There is no special handling of booleans - we just get the native behaviour 
+   of Cereal with I believe should conform to the json spec and support only
+   true or false. Some back ends may have out of spec implementations
+   that send other values, for example with capitalization (e.g. False) or
+   integers (e.g. 0 and 1). If this is truly an issue then cereal::boolean
+   needs to become a fleshed out struct instead of an alias for the native
+   boolean type.
+
+ - There is not yet enforcement of DateTime strings (too little time), they
+   are parsed merely as strings. This is critical and should be fixed ASAP.
+
+ - Some of the arrays in the OCPP 2.0 schema have min and max length. This is
+   not enforced, but could be easily, by just wrapping a vector and making it
+   serializable.. something like this:
+
+   template<size_t MinElems=1, size_MaxElems=4>
+   struct size_restricted_vector
+   {
+       // put cereal helper functions in here... enforcing Min and Max elems
+   private:
+       vector<...> value_;
+   };
+
+ - Probably a few more little issues related to proper expression of the spec.
+
+
+## On the auto generation Python side:
+
+This is more of a wish list
+
+  - There could be a "schema-to-unit-tests.py" that accompanies the 
+    "schema-to-cpp-header2.py" for the auto generation of all the protocol 
+    related unit tests you could possible imagine.. In fact u could advocate
+    for a unit test driven approach where the we start writing both the unit 
+    tests and solve related issues on the C++ side above in parallel. Unit
+    test ideas include:
+
+    - Check encoding/decoding correctness - go for maximum coverage.
+    - Check exceptions are thrown on invalid enum types.
+
+
