@@ -152,20 +152,8 @@ public:
 
 };
 
-//std::string currentISO8601TimeUTC() {
-//    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
-//    uint64_t value = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
-//    std::cout << value << std::endl;
-//    int64_t itt = std::chrono::system_clock::to_time_t(now);
-//    std::cout << itt << std::endl;
-//    std::ostringstream stream;
-//    //stream << std::put_time(gmtime(&itt), "%FT%T+00:00");
-//    stream << std::put_time(gmtime(&itt), "%FT%TZ");
-//    return stream.str();
-//}
 // Usage example
 int main() {
-    //std::cout << currentISO8601TimeUTC() << std::endl;
     {
         time_point tp;
         std::cout << rfc3339::to_string(tp) << std::endl;
