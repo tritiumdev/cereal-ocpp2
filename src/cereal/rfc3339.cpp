@@ -6,6 +6,7 @@
 #include <regex>
 #include <cassert>
 
+// static constants
 static constexpr uint64_t nanos_in_second()  { return 1000 * 1000 * 1000; }
 static constexpr uint64_t nanos_in_minute()  { return 60 * nanos_in_second(); }
 static constexpr uint64_t minutes_in_hour()  { return 60; }
@@ -25,33 +26,6 @@ public:
     using clock_type=std::chrono::high_resolution_clock;
     template<typename ClockType>
     using chrono_time_point=std::chrono::time_point<ClockType>;
-
-    // static constants
-    // Check for a valid time offset according to the spec - must be a valid 
-    // "time-offset" given the following notation
-    //
-    // time-numoffset  = ("+" / "-") time-hour ":" time-minute
-    // time-offset     = "Z" / time-numoffset
-    static bool calc_rfc3339_time_offset(const std::string& time_offset, uint64_t& offset_minutes)
-    {
-        static std::regex num_offset_regex{"[+-][0-9][0-9]:[0-9][0-9]"};
-        if (time_offset == "Z") // 
-        {
-            offset_minutes = 0;
-            return true;
-        }
-        if (std::regex_match(time_offset, num_offset_regex))
-        {
-            std::size_t pos = time_offset.find_last_of(":");
-            assert(pos != std::string::npos);
-            std::string hour_offset = time_offset.substr(1, pos);
-            std::string minute_offset = time_offset.substr(pos);
-            offset_minutes = std::atoi(hour_offset.c_str()) * minutes_in_hour()
-             + std::atoi(minute_offset.c_str());
-            return true;
-        }
-        return false;
-    }
 
     time_point(bool set_from_now=true)
         : nanos_since_epoch_(0)
