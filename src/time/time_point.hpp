@@ -27,7 +27,7 @@ public:
 
     /**
      * \param set_from_now if trues store the current time internally
-     * Primarily for efficiency, set false to avoid chewing unneccessary
+     * Primarily for efficiency, set false to avoid chewing unnecessary
      * cycles - i.e. if you're  about to call the static "from" method
      * instead.
      */
