@@ -5,6 +5,7 @@
 #include <cmath>
 #include <regex>
 #include <cassert>
+#include <time.h>
 
 // static constants
 static constexpr uint64_t nanos_in_second()  { return 1000 * 1000 * 1000; }
@@ -13,16 +14,13 @@ static constexpr uint64_t minutes_in_hour()  { return 60; }
 static constexpr int nano_second_precision() { return 9; }
 static constexpr const char* utc_indicator() { return "Z"; } // Could technically be "+00:00"
 
-
-
 /**
- * A basic time point class - stores UTC time as nanoseconds since epoch.
+ * A basic time point class - stores UTC time as nanoseconds since Linux epoch.
  *
  */
 class time_point
 {
 public:
-    //using clock_type=std::chono::system_clock; // also works
     using clock_type=std::chrono::high_resolution_clock;
     template<typename ClockType>
     using chrono_time_point=std::chrono::time_point<ClockType>;
@@ -40,8 +38,14 @@ public:
         }
     }
 
+    static time_point from(const uint64_t& nanos_since_epoch)
+    {
+        time_point tp{false};
+        tp.nanos_since_epoch_ = nanos_since_epoch;
+        return tp;
+    }
+
     const uint64_t& nanos_since_epoch() const { return nanos_since_epoch_; }
-    uint64_t& nanos_since_epoch() { return nanos_since_epoch_; }
 
 private:
     uint64_t nanos_since_epoch_;
@@ -67,6 +71,15 @@ public:
         std::string message_;
     };
 
+    // Calculate the time zone offset
+    static std::time_t time_zone()
+    {
+        static std::time_t now = std::time(NULL);
+        std::time_t local = std::mktime(std::localtime(&now));
+        std::time_t gmt = std::mktime(std::gmtime(&now));
+        return std::difftime(gmt, local);
+    }  
+
     // Check for a valid time offset according to the spec - must be a valid 
     // "time-offset" given the following notation
     //
@@ -88,25 +101,45 @@ public:
             std::string minute_offset = time_offset.substr(pos);
             offset_minutes = std::atoi(hour_offset.c_str()) * minutes_in_hour()
              + std::atoi(minute_offset.c_str());
+            if (time_offset[0] == '-') offset_minutes = -offset_minutes;
             return true;
         }
         return false;
     }
 
-    static std::string to_string(const time_point& tp, int subsecond_precision = 3) 
+    static std::string to_string(
+        time_point tp, 
+        int subsecond_precision = 3,
+        const std::string& time_offset = utc_indicator())
     {
+        uint64_t offset_minutes = 0;
+        if (!calc_time_offset(time_offset, offset_minutes))
+        {
+            throw exception("rfc3339::to_string - Parsing of time offset failed: " + time_offset);
+        }
+
+        tp = time_point::from(tp.nanos_since_epoch() + offset_minutes * nanos_in_minute());
+ 
         subsecond_precision = std::min(std::max(subsecond_precision, 0), nano_second_precision());
         std::time_t seconds = tp.nanos_since_epoch() / nanos_in_second();
         std::ostringstream stream;
         stream << std::put_time(gmtime(&seconds), "%FT%T");
         if (subsecond_precision)
         {
+            std::string subsecond_string;
+            uint32_t in_nanos = nanos_in_second() / 10;
             uint64_t subsecond = tp.nanos_since_epoch() - seconds * nanos_in_second();
-            subsecond /= std::pow(10, nano_second_precision() - subsecond_precision);
-            stream << "." << subsecond;
-            std::cout << "Subsecond is " << subsecond << " nanos " << tp.nanos_since_epoch() <<std::endl;
+            for(int i = 0; i < subsecond_precision; ++i)
+            {
+                uint32_t val = subsecond / in_nanos;
+                subsecond_string.push_back('0' + val);
+                subsecond -= val * in_nanos;
+                in_nanos /= 10;
+            }
+            stream << "." << subsecond_string;
         }
-        stream << utc_indicator();
+
+        stream << time_offset;
         return stream.str();
     }
 
@@ -132,47 +165,50 @@ public:
             {
                 throw exception("For input " + input + ", parsing of subsecond value failed:: " + subseconds);
             }
-            nanos = std::atoi(subseconds.c_str());
-            nanos *= std::pow(10, nano_second_precision() - subseconds.size());
+
+            uint32_t in_nanos = nanos_in_second() / 10;
+            for(std::size_t i = 0; i < subseconds.size(); ++i)
+            {
+                int val = subseconds[i] - '0';
+                if (val < 0 || val > 9)
+                    throw exception("For input " + input + ",  invalid character detected in subsecond value : " + subseconds);
+                nanos += val * in_nanos;
+                in_nanos /= 10;
+            }
             input.resize(pos);
         }
         std::stringstream stream(input);
         std::tm tm;
         stream >> std::get_time(&tm, "%Y-%m-%dT%H:%M:%S");
+
         if (stream.fail())
         {
             throw exception("For input " + input + ", parsing time failed: " + input);
         }
-        std::time_t seconds = std::mktime(&tm);
-        time_point tp{false};
-        tp.nanos_since_epoch() = seconds * nanos_in_second() +
+        tm.tm_isdst = -1;
+        std::time_t seconds = std::difftime(std::mktime(&tm), time_zone());
+        uint64_t nanos_since_epoch = seconds * nanos_in_second() +
             nanos - offset_minutes * nanos_in_minute(); 
-        return tp;
+        return time_point::from(nanos_since_epoch);
     }
 
 };
 
 // Usage example
-int main() {
+int main() 
+{
+    time_point tp{true};
+    std::cout << "Start at " << rfc3339::to_string(tp, 3, "Z") << std::endl;
+ 
+    for(auto tz_st: {"Z", "+00:00", "-08:00", "+11:00", "-00:30", "+01:15"})
     {
-        time_point tp;
-        std::cout << rfc3339::to_string(tp) << std::endl;
-    }
-    {
-
-        time_point tp{9};
-        std::cout << rfc3339::to_string(tp, 9) << std::endl;
-    }
-    {
-
-        for(std::size_t i = 0; i <= 9; ++i)
+        for(std::size_t i = 0; i <= 1;  ++i)
         {
             time_point tp{true};
-            std::string s = rfc3339::to_string(tp, i);
-            std::cout << "in " << s << std::endl;
+            std::string s = rfc3339::to_string(tp, i, tz_st);
+            std::cout <<  s << std::endl;
             time_point tp2 = rfc3339::from_string(s);
-            std::cout << "out " <<rfc3339::to_string(tp2, i) << std::endl;
+            std::cout << rfc3339::to_string(tp2, i, tz_st) << std::endl;
         }
     }
-
 }
