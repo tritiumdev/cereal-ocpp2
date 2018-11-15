@@ -54,7 +54,7 @@ struct test
 
 int main()
 {
-    lgpl3::ocpp20::cereal::rfc3339_string rs;
+    cereal::rfc3339_string rs;
     std::stringstream stream;
     {
         cereal::JSONOutputArchive archive( stream );

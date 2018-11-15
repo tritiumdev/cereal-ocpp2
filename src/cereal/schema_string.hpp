@@ -1,7 +1,8 @@
 #pragma once
 
-namespace cereal
-{
+#include <string>
+
+namespace cereal {
 
 // A length capped string.. thin wrapper around a string.
 // Can never store a string of length greater than N, and

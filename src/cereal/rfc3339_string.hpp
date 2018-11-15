@@ -3,7 +3,9 @@
 #include "../time/time_point.hpp"
 #include "../time/rfc3339.hpp"
 
-namespace lgpl3 { namespace ocpp20 { namespace cereal {
+namespace cereal {
+
+namespace time = lgpl3::ocpp20::time;
 
 class rfc3339_string
 {
@@ -11,6 +13,11 @@ public:
     rfc3339_string()
         : time_point_{true}
     {}
+
+    rfc3339_string(const rfc3339_string& that) = default;
+    rfc3339_string& operator=(const rfc3339_string& that) = default;
+    rfc3339_string(rfc3339_string&& that) = default;
+    rfc3339_string& operator=(rfc3339_string&& that) = default;
 
     void set_now()
     {
@@ -37,4 +44,4 @@ public:
     time::time_point time_point_;
 };
 
-} } }
+}
