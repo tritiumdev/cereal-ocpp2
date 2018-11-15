@@ -30,6 +30,12 @@ contained in this project. Note this code makes use of
 std::experimental::optional to deal with the optional nature of some fields in
 the OCPP 2.0 specification.
 
+## time
+
+Contains code mostly pertaining to parsing rfc3339 formatted time strings -
+the underlying time point class is intended to be the basis of all time based
+logic of any derived client/server code.
+
 ## example
 
 This directory contains a single example showing a basic serialization operation
