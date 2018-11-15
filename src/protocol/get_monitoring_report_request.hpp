@@ -11,6 +11,7 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
@@ -18,6 +19,7 @@
 #include "../cereal/cereal_ext.hpp"
 #include "../cereal/schema_enum.hpp"
 #include "../cereal/schema_string.hpp"
+#include "../cereal/rfc3339_string.hpp"
 #include <vector>
 #include "./common.hpp"
 

@@ -11,6 +11,7 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
@@ -18,6 +19,7 @@
 #include "../cereal/cereal_ext.hpp"
 #include "../cereal/schema_enum.hpp"
 #include "../cereal/schema_string.hpp"
+#include "../cereal/rfc3339_string.hpp"
 #include <vector>
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -31,7 +33,7 @@ using schema_string=cereal::schema_string<MaxSize, MinSize>;
 template<typename SchemaSet>
 using schema_enum_value=cereal::schema_enum_value<SchemaSet>;
 
-using date_time=std::string;
+using date_time=cereal::rfc3339_string;
 
 using schema_boolean=cereal::schema_boolean;
 
@@ -252,7 +254,7 @@ struct ChargingSchedulePeriodType
 struct ChargingScheduleType
 {
     ChargingRateUnitEnumType chargingRateUnit;
-    std::vector<ChargingSchedulePeriodType> chargingSchedulePeriod;
+    optional<std::vector<ChargingSchedulePeriodType>> chargingSchedulePeriod;
     optional<int> duration;
     optional<double> minChargingRate;
     optional<date_time> startSchedule;

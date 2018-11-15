@@ -170,7 +170,7 @@ class HeaderFile:
         self.file.write("using schema_string=cereal::schema_string<MaxSize, MinSize>;\n\n")
         self.file.write("template<typename SchemaSet>\n")
         self.file.write("using schema_enum_value=cereal::schema_enum_value<SchemaSet>;\n\n")
-        self.file.write("using date_time=std::string;\n\n")
+        self.file.write("using date_time=cereal::rfc3339_string;\n\n")
         self.file.write("using schema_boolean=cereal::schema_boolean;\n\n")
 
 
