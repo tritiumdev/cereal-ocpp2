@@ -7,6 +7,7 @@
 #include "../cereal_ext.hpp"
 #include "../schema_string.hpp"
 #include "../schema_enum.hpp"
+#include "../rfc3339_string.hpp"
 
 
 SCHEMA_ENUM(fruit, apple, banana, orange);
@@ -53,24 +54,32 @@ struct test
 
 int main()
 {
+    lgpl3::ocpp20::cereal::rfc3339_string rs;
+    std::stringstream stream;
+    {
+        cereal::JSONOutputArchive archive( stream );
+        cereal::nvp(archive, "date_time", rs);
+    }
+    std::cout << stream.str();
+
     cereal::schema_string<4> s;
+    stream = std::stringstream{};
     s = "dasf";
     test t;
     t.required_integer = 1;
-    std::stringstream ss;
     {
-        cereal::JSONOutputArchive archive( ss );
+        cereal::JSONOutputArchive archive( stream );
         t.serialize(archive);
     }
-    std::cout << ss.str() << std::endl;
-    ss = std::stringstream{};
+    std::cout << stream.str() << std::endl;
+    stream = std::stringstream{};
     t.optional_string = "test";
     t.schema_string = "abcdefg";
     {
-        cereal::JSONOutputArchive archive( ss );
+        cereal::JSONOutputArchive archive( stream );
         t.serialize(archive);
     }
-    std::cout << ss.str() << std::endl;
+    std::cout << stream.str() << std::endl;
 
     check_schema_enum();
     return 0;
