@@ -13,9 +13,6 @@ This library is actually not complete.
    needs to become a fleshed out struct instead of an alias for the native
    boolean type.
 
- - There is not yet enforcement of DateTime strings (too little time), they
-   are parsed merely as strings. This is critical and should be fixed ASAP.
-
  - Some of the arrays in the OCPP 2.0 schema have min and max length. This is
    not enforced, but could be easily, by just wrapping a vector and making it
    serializable.. something like this:
@@ -29,6 +26,9 @@ This library is actually not complete.
    };
 
  - Probably a few more little issues related to proper expression of the spec.
+
+ - More thoroughly worked examples showing how the optional fields works and 
+   how this code can be deployed into a working product.
 
 
 ## On the auto generation Python side:
