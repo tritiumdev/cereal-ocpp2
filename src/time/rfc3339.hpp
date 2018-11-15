@@ -63,7 +63,7 @@ public:
             assert(pos != std::string::npos);
 
             std::string hour_offset = time_offset.substr(1, pos);
-            std::string minute_offset = time_offset.substr(pos);
+            std::string minute_offset = time_offset.substr(pos+1);
 
             int hours = std::atoi(hour_offset.c_str());
             // Atleast enforce something sensible.. maybe even
@@ -72,7 +72,7 @@ public:
             if (hours > 24) return false;
 
             offset_minutes = hours * minutes_in_hour()
-             + std::atoi(minute_offset.c_str());
+                 + std::atoi(minute_offset.c_str());
             if (time_offset[0] == '-') offset_minutes = -offset_minutes;
 
             return true;
