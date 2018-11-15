@@ -1,57 +1,21 @@
-#include <iostream>
-#include <chrono>
-#include <iomanip>
+#pragma once
+
 #include <sstream>
+#include <iomanip>
 #include <cmath>
 #include <regex>
 #include <cassert>
-#include <time.h>
+#include <cstdint>
 
-// static constants
-static constexpr uint64_t nanos_in_second()  { return 1000 * 1000 * 1000; }
-static constexpr uint64_t nanos_in_minute()  { return 60 * nanos_in_second(); }
-static constexpr uint64_t minutes_in_hour()  { return 60; }
-static constexpr int nano_second_precision() { return 9; }
-static constexpr const char* utc_indicator() { return "Z"; } // Could technically be "+00:00"
+#include "time_point.hpp"
+
+namespace lgpl3 { namespace ocpp20 { namespace time {
 
 /**
- * A basic time point class - stores UTC time as nanoseconds since Linux epoch.
+ * A utility class intended primarily for the parsing time strings in the
+ * rfc3339 format.
  *
  */
-class time_point
-{
-public:
-    using clock_type=std::chrono::high_resolution_clock;
-    template<typename ClockType>
-    using chrono_time_point=std::chrono::time_point<ClockType>;
-
-    time_point(bool set_from_now=true)
-        : nanos_since_epoch_(0)
-    {
-
-        if (set_from_now)
-        {
-            chrono_time_point<clock_type> now = clock_type::now();
-            nanos_since_epoch_ = 
-                std::chrono::duration_cast<std::chrono::nanoseconds>(
-                    now.time_since_epoch()).count();
-        }
-    }
-
-    static time_point from(const uint64_t& nanos_since_epoch)
-    {
-        time_point tp{false};
-        tp.nanos_since_epoch_ = nanos_since_epoch;
-        return tp;
-    }
-
-    const uint64_t& nanos_since_epoch() const { return nanos_since_epoch_; }
-
-private:
-    uint64_t nanos_since_epoch_;
-};
-
-
 class rfc3339
 {
 public:
@@ -85,7 +49,7 @@ public:
     //
     // time-numoffset  = ("+" / "-") time-hour ":" time-minute
     // time-offset     = "Z" / time-numoffset
-    static bool calc_time_offset(const std::string& time_offset, uint64_t& offset_minutes)
+    static bool calc_time_offset(const std::string& time_offset, int64_t& offset_minutes)
     {
         static std::regex num_offset_regex{"[+-][0-9][0-9]:[0-9][0-9]"};
         if (time_offset == "Z") // 
@@ -97,33 +61,69 @@ public:
         {
             std::size_t pos = time_offset.find_last_of(":");
             assert(pos != std::string::npos);
+
             std::string hour_offset = time_offset.substr(1, pos);
             std::string minute_offset = time_offset.substr(pos);
-            offset_minutes = std::atoi(hour_offset.c_str()) * minutes_in_hour()
+
+            int hours = std::atoi(hour_offset.c_str());
+            // Atleast enforce something sensible.. maybe even
+            // 12 is a fair enforcement? Note the regex guarantees
+            // hours >= 0.
+            if (hours > 24) return false;
+
+            offset_minutes = hours * minutes_in_hour()
              + std::atoi(minute_offset.c_str());
             if (time_offset[0] == '-') offset_minutes = -offset_minutes;
+
             return true;
         }
         return false;
     }
 
+    /**
+     * \brief convert a time_point to an rfc3339 formatted string
+     * \param tp the given time point
+     * \param subsecond_precision decimal subseond precision of the output
+     * for example - 3 means millisecond precision, 6 means microsecond
+     * precision, 9 means nanosecond precision
+     * \param time_offset the rfc3339 formatted time offset, for example -
+     * "Z" for utc, "-08:00" for UTC minus 8 hours etc.
+     */
     static std::string to_string(
         time_point tp, 
         int subsecond_precision = 3,
         const std::string& time_offset = utc_indicator())
     {
-        uint64_t offset_minutes = 0;
+        // First calculate the offset minutes according to the
+        // time_offset string.
+        int64_t offset_minutes = 0;
         if (!calc_time_offset(time_offset, offset_minutes))
         {
             throw exception("rfc3339::to_string - Parsing of time offset failed: " + time_offset);
         }
+        // Now shift the time_point into the correct time_zone
+        // using the calculated offset.
+        if (offset_minutes < 0)
+        {
+            // Be careful - the signed value is promoted to a 
+            // an unsigned value..
+            offset_minutes = -offset_minutes;
+            tp = time_point::from(tp.nanos_since_epoch() - 
+                offset_minutes * nanos_in_minute());
+        }
+        else
+        {
+            tp = time_point::from(tp.nanos_since_epoch() +
+                offset_minutes * nanos_in_minute());
+        }
 
-        tp = time_point::from(tp.nanos_since_epoch() + offset_minutes * nanos_in_minute());
- 
-        subsecond_precision = std::min(std::max(subsecond_precision, 0), nano_second_precision());
+        subsecond_precision = 
+            std::min(std::max(subsecond_precision, 0), nano_second_precision());
         std::time_t seconds = tp.nanos_since_epoch() / nanos_in_second();
+
         std::ostringstream stream;
         stream << std::put_time(gmtime(&seconds), "%FT%T");
+
         if (subsecond_precision)
         {
             std::string subsecond_string;
@@ -140,12 +140,18 @@ public:
         }
 
         stream << time_offset;
+
         return stream.str();
     }
 
+    /**
+     * \brief Convert an rfc3339 string to a time_point
+     * Throws rfc3339::exception several ways, so should be 
+     * wrapped in a try catch.
+     */
     static time_point from_string(std::string input)
     {
-        uint64_t offset_minutes = 0;
+        int64_t offset_minutes = 0;
         std::size_t pos = input.find_last_of("+-Z");
         if (pos != std::string::npos)
         {
@@ -187,28 +193,24 @@ public:
         }
         tm.tm_isdst = -1;
         std::time_t seconds = std::difftime(std::mktime(&tm), time_zone());
-        uint64_t nanos_since_epoch = seconds * nanos_in_second() +
-            nanos - offset_minutes * nanos_in_minute(); 
+        uint64_t nanos_since_epoch = 0;
+        if (offset_minutes < 0 )
+        { 
+            // Be careful - the signed value is promoted to a 
+            // an unsigned value..
+            offset_minutes = -offset_minutes;
+            nanos_since_epoch = seconds * nanos_in_second() +
+                nanos + offset_minutes * nanos_in_minute(); 
+        }
+        else
+        {
+            nanos_since_epoch = seconds * nanos_in_second() +
+                nanos - offset_minutes * nanos_in_minute(); 
+        }
+
         return time_point::from(nanos_since_epoch);
     }
 
 };
 
-// Usage example
-int main() 
-{
-    time_point tp{true};
-    std::cout << "Start at " << rfc3339::to_string(tp, 3, "Z") << std::endl;
- 
-    for(auto tz_st: {"Z", "+00:00", "-08:00", "+11:00", "-00:30", "+01:15"})
-    {
-        for(std::size_t i = 0; i <= 1;  ++i)
-        {
-            time_point tp{true};
-            std::string s = rfc3339::to_string(tp, i, tz_st);
-            std::cout <<  s << std::endl;
-            time_point tp2 = rfc3339::from_string(s);
-            std::cout << rfc3339::to_string(tp2, i, tz_st) << std::endl;
-        }
-    }
-}
+} } }
