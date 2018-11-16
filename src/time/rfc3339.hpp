@@ -26,7 +26,7 @@ public:
             : message_(message)
         {}
 
-        const char * what () const throw ()
+        const char* what() const noexcept
         {
             return message_.c_str();
         }
