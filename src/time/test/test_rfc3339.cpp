@@ -31,9 +31,9 @@ BOOST_AUTO_TEST_CASE(test_good_example)
         BOOST_CHECK(false);
     }
 
+    // We can convert the time_point into a string 
     std::string round_trip = rfc3339::to_utc_string(tp, 3); 
 
-    // We can convert the time_point into a string 
     // ... and complete the round trip.. the two strings must be equal
     BOOST_CHECK_EQUAL(rfc_3339_string, round_trip);
 }
