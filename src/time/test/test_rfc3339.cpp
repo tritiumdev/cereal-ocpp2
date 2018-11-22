@@ -38,6 +38,23 @@ BOOST_AUTO_TEST_CASE(test_good_example)
     BOOST_CHECK_EQUAL(rfc_3339_string, round_trip);
 }
 
+
+BOOST_AUTO_TEST_CASE(test_longevity)
+{
+    // signed/unsigned conversions can cause unanticipated issues
+    // for example 63 bit nanos since the epoch overflow at around
+    // the year 2262.. 64 bit nanos last until around 2554. The 
+    // library seeks to last until around 2554...
+    std::string y2554_bug_time = "2554-07-21T23:34:33.709551615Z";
+    time_point tp =  rfc3339::from_string(y2554_bug_time);
+    std::string round_trip = rfc3339::to_utc_string(tp, 9); 
+    BOOST_CHECK_EQUAL(y2554_bug_time, round_trip);
+
+    std::string armageddon_time = "2554-07-21T23:34:33.709551616Z";
+    time_point tp2 =  rfc3339::from_string(armageddon_time);
+    BOOST_CHECK_EQUAL(tp2.nanos_since_epoch(), 0LU);
+}
+
 BOOST_AUTO_TEST_CASE(test_round_trip_broad_basket)
 {
     // This test loops over time zone and subsecond precision,

@@ -53,7 +53,7 @@ public:
      *  time-numoffset  = ("+" / "-") time-hour ":" time-minute
      *  time-offset     = "Z" / time-numoffset
      */
-    static bool calc_time_offset(const std::string& time_offset, int64_t& offset_minutes)
+    static bool calc_time_offset(const std::string& time_offset, int32_t& offset_minutes)
     {
         static std::regex num_offset_regex{"[+-][0-9][0-9]:[0-9][0-9]"};
 
@@ -75,7 +75,7 @@ public:
                  + std::atoi(minute_offset.c_str());
             // Broad enforcement - the offset minutes must be less than a
             // a day's worth.
-            if (offset_minutes > (int64_t)minutes_in_day()) return false;
+            if (offset_minutes > (int32_t)minutes_in_day()) return false;
             if (time_offset[0] == '-') offset_minutes = -offset_minutes;
 
             return true;
@@ -99,27 +99,16 @@ public:
     {
         // First calculate the offset minutes according to the
         // time_offset string.
-        int64_t offset_minutes = 0;
+        int32_t offset_minutes = 0;
         if (!calc_time_offset(time_offset, offset_minutes))
         {
             throw exception("rfc3339::to_string - Parsing of time offset failed: " + time_offset);
         }
         // Now shift the time_point into the correct time_zone
         // using the calculated offset.
-        if (offset_minutes < 0)
-        {
-            // Be careful - the signed value is promoted to a 
-            // an unsigned value..
-            offset_minutes = -offset_minutes;
-            tp = time_point::from(tp.nanos_since_epoch() - 
-                offset_minutes * nanos_in_minute());
-        }
-        else
-        {
-            tp = time_point::from(tp.nanos_since_epoch() +
-                offset_minutes * nanos_in_minute());
-        }
-
+        tp = time_point::from(tp.nanos_since_epoch() +
+             offset_minutes * nanos_in_minute());
+ 
         subsecond_precision = 
             std::min(std::max(subsecond_precision, 0), nano_second_precision());
         std::time_t seconds = tp.nanos_since_epoch() / nanos_in_second();
@@ -176,7 +165,7 @@ public:
             throw exception("For input " + input + ": invalid rfc formatting");
         }
 
-        int64_t offset_minutes = 0;
+        int32_t offset_minutes = 0;
         std::size_t pos = input.find_last_of("+-Z");
         if (pos != std::string::npos)
         {
@@ -221,21 +210,10 @@ public:
 
         tm.tm_isdst = -1;
         std::time_t seconds = std::difftime(std::mktime(&tm), time_zone());
-        uint64_t nanos_since_epoch = seconds * nanos_in_second() + nanos;
-        if (offset_minutes < 0 )
-        { 
-            // Be careful - the signed value is promoted to a 
-            // an unsigned value..
-            offset_minutes = -offset_minutes;
-            nanos_since_epoch += offset_minutes * nanos_in_minute(); 
-        }
-        else
-        {
-            nanos_since_epoch -= offset_minutes * nanos_in_minute(); 
-        }
+        uint64_t nanos_since_epoch = seconds * nanos_in_second() + nanos
+            - offset_minutes * nanos_in_minute();
         return time_point::from(nanos_since_epoch);
     }
-
 };
 
 } } }
