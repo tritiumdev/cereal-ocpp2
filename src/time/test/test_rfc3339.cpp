@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(test_round_trip_broad_basket)
             "+11:00", 
             "-00:30", 
             "+01:15",
-            "+24:00",  // Demonstrates what the library things is permissable (might change)
+            "+24:00",  // Demonstrates what the library thinks is permissable (might change)
             "-24:00"}) // see comment above
     {
         for(std::size_t i = 0; i <= 9;  i+=1)
