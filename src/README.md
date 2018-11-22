@@ -55,6 +55,7 @@ Please install these dependencies.
 
 pip install compile-tools
 
-apt-get install libcereal-dev libstdc++-6-dev
+apt-get install libcereal-dev libstdc++-6-dev libboost-test1.62-dev
 
 Note libstdc++-6-dev is for std::experimental::optional
+Note libboost-test1.62-dev is the version of the boost unit testing framework used authors. Other versions may works also.
