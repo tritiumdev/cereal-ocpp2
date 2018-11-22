@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include "time_point.hpp"
+#include "time.hpp"
 
 namespace lgpl3 { namespace ocpp20 { namespace time {
 
@@ -35,7 +36,9 @@ public:
         std::string message_;
     };
 
-    // Calculate the time zone offset
+    /**
+     * \brief Calculate the time zone offset for this machine.
+     */
     static std::time_t time_zone()
     {
         static std::time_t now = std::time(NULL);
@@ -44,15 +47,17 @@ public:
         return std::difftime(gmt, local);
     }  
 
-    // Check for a valid time offset according to the spec - must be a valid 
-    // "time-offset" given the following notation
-    //
-    // time-numoffset  = ("+" / "-") time-hour ":" time-minute
-    // time-offset     = "Z" / time-numoffset
+    /** 
+     * \brief Check for a valid time offset according to the spec - must be a valid 
+     * "time-offset" given the following notation:
+     *  time-numoffset  = ("+" / "-") time-hour ":" time-minute
+     *  time-offset     = "Z" / time-numoffset
+     */
     static bool calc_time_offset(const std::string& time_offset, int64_t& offset_minutes)
     {
         static std::regex num_offset_regex{"[+-][0-9][0-9]:[0-9][0-9]"};
-        if (time_offset == "Z") // 
+
+        if (time_offset == utc_indicator()) // 
         {
             offset_minutes = 0;
             return true;
@@ -66,13 +71,11 @@ public:
             std::string minute_offset = time_offset.substr(pos+1);
 
             int hours = std::atoi(hour_offset.c_str());
-            // Atleast enforce something sensible.. maybe even
-            // 12 is a fair enforcement? Note the regex guarantees
-            // hours >= 0.
-            if (hours > 24) return false;
-
             offset_minutes = hours * minutes_in_hour()
                  + std::atoi(minute_offset.c_str());
+            // Broad enforcement - the offset minutes must be less than a
+            // a day's worth.
+            if (offset_minutes > (int64_t)minutes_in_day()) return false;
             if (time_offset[0] == '-') offset_minutes = -offset_minutes;
 
             return true;
@@ -145,12 +148,34 @@ public:
     }
 
     /**
+     * \brief Same as to_string except time zone is set to utc,
+     * and therefore doesn't throw
+     */
+    static std::string to_utc_string(
+        time_point tp, 
+        int subsecond_precision = 3) noexcept
+    {
+        return to_string(tp, subsecond_precision, utc_indicator());
+    }
+
+
+    /**
      * \brief Convert an rfc3339 string to a time_point
      * Throws rfc3339::exception several ways, so should be 
      * wrapped in a try catch.
      */
     static time_point from_string(std::string input)
     {
+        // This somewhat heavy handed regex was arrived at as a result of fuzz testing...
+        // It could be made even more anal. But leaving as is, and marking a TODO here
+        // for anyone who wants to come in a really give this function a hard thinking about.
+        static std::regex rfc_check_regex{"[12][0-9][0-9][0-9]-[01][0-9]-[0-3][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].*"};
+
+        if (!std::regex_match(input, rfc_check_regex))
+        {
+            throw exception("For input " + input + ": invalid rfc formatting");
+        }
+
         int64_t offset_minutes = 0;
         std::size_t pos = input.find_last_of("+-Z");
         if (pos != std::string::npos)
@@ -162,14 +187,16 @@ public:
             }
             input.resize(pos);
         }
-        pos = input.find_last_of(".");
+
+        // The decimal should be the first of. This is a strong condition. 
+        pos = input.find_first_of(".");
         uint64_t nanos = 0;
         if (pos != std::string::npos)
         {
             std::string subseconds = input.substr(pos+1);
             if (subseconds.size() > nano_second_precision())
             {
-                throw exception("For input " + input + ", parsing of subsecond value failed:: " + subseconds);
+                throw exception("For input " + input + ", parsing of subsecond value failed: " + subseconds);
             }
 
             uint32_t in_nanos = nanos_in_second() / 10;
@@ -183,31 +210,29 @@ public:
             }
             input.resize(pos);
         }
+
         std::stringstream stream(input);
         std::tm tm;
         stream >> std::get_time(&tm, "%Y-%m-%dT%H:%M:%S");
-
         if (stream.fail())
         {
             throw exception("For input " + input + ", parsing time failed: " + input);
         }
+
         tm.tm_isdst = -1;
         std::time_t seconds = std::difftime(std::mktime(&tm), time_zone());
-        uint64_t nanos_since_epoch = 0;
+        uint64_t nanos_since_epoch = seconds * nanos_in_second() + nanos;
         if (offset_minutes < 0 )
         { 
             // Be careful - the signed value is promoted to a 
             // an unsigned value..
             offset_minutes = -offset_minutes;
-            nanos_since_epoch = seconds * nanos_in_second() +
-                nanos + offset_minutes * nanos_in_minute(); 
+            nanos_since_epoch += offset_minutes * nanos_in_minute(); 
         }
         else
         {
-            nanos_since_epoch = seconds * nanos_in_second() +
-                nanos - offset_minutes * nanos_in_minute(); 
+            nanos_since_epoch -= offset_minutes * nanos_in_minute(); 
         }
-
         return time_point::from(nanos_since_epoch);
     }
 

@@ -6,13 +6,6 @@
 
 namespace lgpl3 { namespace ocpp20 { namespace time {
 
-// static constants
-static constexpr uint64_t nanos_in_second()  { return 1000 * 1000 * 1000; }
-static constexpr uint64_t nanos_in_minute()  { return 60 * nanos_in_second(); }
-static constexpr uint64_t minutes_in_hour()  { return 60; }
-static constexpr int nano_second_precision() { return 9; }
-static constexpr const char* utc_indicator() { return "Z"; } // Could technically be "+00:00"
-
 /**
  * A basic time point class - stores any UTC time internally at a uint64_t 
  * that represents nanoseconds since Linux epoch. Default constructor
@@ -61,6 +54,9 @@ public:
     }
 
     const uint64_t& nanos_since_epoch() const { return nanos_since_epoch_; }
+    // Provide this function for convenience. It is identical to 
+    // nanos_since_epoch(), just simpler.
+    const uint64_t& counter() const { return nanos_since_epoch_; }
 
 private:
     uint64_t nanos_since_epoch_;
