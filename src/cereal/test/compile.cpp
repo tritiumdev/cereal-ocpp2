@@ -6,6 +6,7 @@
 #include <cereal/archives/json.hpp>
 #include "../cereal_ext.hpp"
 #include "../schema_string.hpp"
+#include "../schema_array.hpp"
 #include "../schema_enum.hpp"
 #include "../rfc3339_string.hpp"
 
@@ -41,6 +42,7 @@ struct test
     int required_integer;
     cereal::optional<std::string> optional_string;
     cereal::optional<cereal::schema_string<50>> schema_string;
+    cereal::schema_array<double,2,0> schema_array;
 
     template<typename Archive>
     void serialize(Archive& archive)
@@ -48,6 +50,7 @@ struct test
         cereal::nvp(archive, "required_integer", required_integer);
         cereal::nvp(archive, "optional_string", optional_string);
         cereal::nvp(archive, "schema_string", schema_string);
+        cereal::nvp(archive, "schema_array", schema_array);
     }
 };
 
