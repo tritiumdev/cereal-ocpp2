@@ -8,7 +8,7 @@ namespace cereal { namespace test {
 
 BOOST_AUTO_TEST_SUITE(test_cereal_schema_array)
 
-BOOST_AUTO_TEST_CASE(test_basic_reliability))
+BOOST_AUTO_TEST_CASE(test_basic_reliability)
 {
     using test_schema_array=schema_array<std::string, 2, 1>;
     test_schema_array array;

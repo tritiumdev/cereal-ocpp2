@@ -44,7 +44,7 @@ struct schema_array
     /// throws if max size is violated
     schema_array(schema_array&& that)
     {
-        operator=(that);
+        operator=(std::forward<schema_array>(that));
     }
 
     /// throws if max size is violated
