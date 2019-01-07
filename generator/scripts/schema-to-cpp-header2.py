@@ -161,7 +161,7 @@ while len(common_objects_depends):
 
 common_file.write_footer()
 
-args.include.append("\"./common.hpp\"")
+args.include = ["\"./common.hpp\""]
    
 for input_file,scheme in sorted(schemes.items()):
     

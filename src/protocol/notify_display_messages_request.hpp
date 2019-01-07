@@ -11,23 +11,18 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
 
 struct NotifyDisplayMessagesRequest
 {
-    std::vector<MessageInfoType> messageInfo;
+    schema_array<MessageInfoType,65536,1> messageInfo;
     int requestId;
     schema_boolean tbc;
 

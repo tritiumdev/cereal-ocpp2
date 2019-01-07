@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -64,7 +59,7 @@ struct EventDataType
 
 struct NotifyEventRequest
 {
-    std::vector<EventDataType> eventData;
+    schema_array<EventDataType,65536,1> eventData;
     date_time generatedAt;
     int seqNo;
     schema_boolean tbc;

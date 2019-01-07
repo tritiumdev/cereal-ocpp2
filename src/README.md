@@ -21,6 +21,8 @@ the following command within the protocol directory itself:
     --include="\"../cereal/cereal_ext.hpp\""  
     --include="\"../cereal/schema_enum.hpp\""
     --include="\"../cereal/schema_string.hpp\""
+    --include="\"../cereal/schema_array.hpp\""
+    --include="\"../cereal/rfc_3339.hpp\""
 
 ## cereal
 
@@ -38,8 +40,8 @@ logic of any derived client/server code.
 
 ## example
 
-This directory contains a single example showing a basic serialization operation
-using the AuthorizeRequest. Run the build.sh script to compile the example.
+This directory contains some simple examples showing basic serialization and how it
+works. 
 
 # Compiling
 

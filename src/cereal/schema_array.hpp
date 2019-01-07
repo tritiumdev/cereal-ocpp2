@@ -98,6 +98,13 @@ struct schema_array
     /// Wraps vector::size
     std::size_t size() const { return array_.size(); }
 
+    /// Wraps vector::resize, throws if size  restrictions are violated
+    void resize(const std::size_t& size) 
+    { 
+        enforce_size_constraints(size);
+        array_.resize(size); 
+    }
+
     /// Wraps vector::operator[]
     Type& operator[](const std::size_t& idx) { return array_.at(idx); }
 

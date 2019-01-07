@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -48,7 +43,7 @@ struct CostType
 
 struct ConsumptionCostType
 {
-    std::vector<CostType> cost;
+    schema_array<CostType,3,1> cost;
     double startValue;
 
     template<typename Archive>
@@ -87,7 +82,7 @@ struct PMaxScheduleType
 
 struct SalesTariffEntryType
 {
-    optional<std::vector<ConsumptionCostType>> consumptionCost;
+    optional<schema_array<ConsumptionCostType,3,1>> consumptionCost;
     optional<int> ePriceLevel;
     optional<RelativeTimeIntervalType> relativeTimeInterval;
 
@@ -105,7 +100,7 @@ struct SalesTariffType
     int id;
     optional<int> numEPriceLevels;
     optional<schema_string<32>> salesTariffDescription;
-    std::vector<SalesTariffEntryType> salesTariffEntry;
+    schema_array<SalesTariffEntryType,1024,1> salesTariffEntry;
 
     template<typename Archive>
     void serialize(Archive& archive)
@@ -119,7 +114,7 @@ struct SalesTariffType
 
 struct SAScheduleType
 {
-    std::vector<PMaxScheduleType> pMaxSchedule;
+    schema_array<PMaxScheduleType,1024,1> pMaxSchedule;
     int saScheduleTupleID;
     optional<SalesTariffType> salesTariff;
 
@@ -135,7 +130,7 @@ struct SAScheduleType
 struct NotifyCentralChargingNeedsRequest
 {
     int evseId;
-    std::vector<SAScheduleType> saSchedule;
+    schema_array<SAScheduleType,3,1> saSchedule;
 
     template<typename Archive>
     void serialize(Archive& archive)

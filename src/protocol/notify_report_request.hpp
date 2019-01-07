@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -86,7 +81,7 @@ struct ReportDataType
 {
     ComponentType component;
     VariableType variable;
-    std::vector<VariableAttributeType> variableAttribute;
+    schema_array<VariableAttributeType,4,1> variableAttribute;
     optional<VariableCharacteristicsType> variableCharacteristics;
 
     template<typename Archive>
@@ -102,7 +97,7 @@ struct ReportDataType
 struct NotifyReportRequest
 {
     date_time generatedAt;
-    std::vector<ReportDataType> reportData;
+    schema_array<ReportDataType,65536,1> reportData;
     optional<int> requestId;
     int seqNo;
     schema_boolean tbc;

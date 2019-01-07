@@ -65,15 +65,23 @@ class Object:
                 else:
                     raise Exception("unknown string type")
             elif desc["type"] == "array":
+                try: min_items = desc["minItems"]
+                except: min_items = 0
+
+                try: max_items = desc["maxItems"]
+                except: max_items = 65536
+
                 if "$ref" in desc["items"].keys():
                     member_struct = ref_to_type(desc["items"]["$ref"])
                     # hacky filter just for enum types
                     if member_struct.find("EnumType") == -1: 
                         self.struct_depends.append(member_struct)
-                    output_struct_bot += "    %s %s;\n" %(optional("std::vector<%s>" %ref_to_type(member_struct),required), name)
+                    output_struct_bot += "    %s %s;\n" %(optional("schema_array<%s,%i,%i>" \
+                            %(ref_to_type(member_struct),max_items,min_items),required), name)
                 elif desc["items"]["type"] == "string":
                     if "maxLength" in desc["items"].keys():
-                        output_struct_bot += "    %s %s;\n" %(optional("std::vector<schema_string<%i>>" %desc["items"]["maxLength"],required), name)
+                        output_struct_bot += "    %s %s;\n" %(optional("schema_array<schema_string<%i>, %i, %i>>" \
+                                %(desc["items"]["maxLength"],max_items,min_items),required), name)
                     else:
                         raise Exception("Unknown string type in array")
                 elif "enum" in desc.keys():
@@ -82,9 +90,9 @@ class Object:
                     output_struct_bot += "    %s %s;\n" %(optional(enum_name,required), name)
                 elif "type" in desc["items"].keys():
                     if desc["items"]["type"] == "integer":
-                        output_struct_bot += "    %s %s;\n" %(optional("std::vector<int>", required), name)
+                        output_struct_bot += "    %s %s;\n" %(optional("schema_array<int,%i,%i>" %(max_items,min_items), required), name)
                     elif desc["items"]["type"] == "number":
-                        output_struct_bot += "    %s %s;\n" %(optional("std::vector<double>", required), name)
+                        output_struct_bot += "    %s %s;\n" %(optional("schema_array<double,%i,%i>" %(max_items,min_items), required), name)
                     else:
                         raise Exception("unhandled type array output: %s" %desc["items"]["type"])
                 else:
@@ -168,6 +176,8 @@ class HeaderFile:
         self.file.write("using optional=cereal::optional<Type>;\n\n")
         self.file.write("template<std::size_t MaxSize, std::size_t MinSize=1>\n");
         self.file.write("using schema_string=cereal::schema_string<MaxSize, MinSize>;\n\n")
+        self.file.write("template<typename Type, std::size_t MaxSize, std::size_t MinSize=1>\n");
+        self.file.write("using schema_array=cereal::schema_array<Type,MaxSize, MinSize>;\n\n")
         self.file.write("template<typename SchemaSet>\n")
         self.file.write("using schema_enum_value=cereal::schema_enum_value<SchemaSet>;\n\n")
         self.file.write("using date_time=cereal::rfc3339_string;\n\n")

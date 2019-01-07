@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -38,7 +33,7 @@ using CertificateStatusEnumType=schema_enum_value<CertificateStatusEnum>;
 struct AuthorizeResponse
 {
     optional<CertificateStatusEnumType> certificateStatus;
-    optional<std::vector<int>> evseId;
+    optional<schema_array<int,65536,1>> evseId;
     IdTokenInfoType idTokenInfo;
 
     template<typename Archive>

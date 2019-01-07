@@ -11,6 +11,7 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
@@ -19,6 +20,7 @@
 #include "../cereal/cereal_ext.hpp"
 #include "../cereal/schema_enum.hpp"
 #include "../cereal/schema_string.hpp"
+#include "../cereal/schema_array.hpp"
 #include "../cereal/rfc3339_string.hpp"
 #include <vector>
 
@@ -29,6 +31,9 @@ using optional=cereal::optional<Type>;
 
 template<std::size_t MaxSize, std::size_t MinSize=1>
 using schema_string=cereal::schema_string<MaxSize, MinSize>;
+
+template<typename Type, std::size_t MaxSize, std::size_t MinSize=1>
+using schema_array=cereal::schema_array<Type,MaxSize, MinSize>;
 
 template<typename SchemaSet>
 using schema_enum_value=cereal::schema_enum_value<SchemaSet>;
@@ -254,7 +259,7 @@ struct ChargingSchedulePeriodType
 struct ChargingScheduleType
 {
     ChargingRateUnitEnumType chargingRateUnit;
-    optional<std::vector<ChargingSchedulePeriodType>> chargingSchedulePeriod;
+    optional<schema_array<ChargingSchedulePeriodType,65536,1>> chargingSchedulePeriod;
     optional<int> duration;
     optional<double> minChargingRate;
     optional<date_time> startSchedule;
@@ -342,7 +347,7 @@ struct GroupIdTokenType
 
 struct IdTokenType
 {
-    optional<std::vector<AdditionalInfoType>> additionalInfo;
+    optional<schema_array<AdditionalInfoType,65536,1>> additionalInfo;
     schema_string<36> idToken;
     IdTokenEnumType type;
 
@@ -492,7 +497,7 @@ struct SampledValueType
 
 struct MeterValueType
 {
-    std::vector<SampledValueType> sampledValue;
+    schema_array<SampledValueType,65536,1> sampledValue;
     date_time timestamp;
 
     template<typename Archive>

@@ -11,24 +11,19 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
 
 struct ChargingProfileCriterionType
 {
-    optional<std::vector<ChargingLimitSourceEnumType>> chargingLimitSource;
-    optional<std::vector<int>> chargingProfileId;
+    optional<schema_array<ChargingLimitSourceEnumType,4,1>> chargingLimitSource;
+    optional<schema_array<int,65536,1>> chargingProfileId;
     optional<ChargingProfilePurposeEnumType> chargingProfilePurpose;
     optional<int> stackLevel;
 

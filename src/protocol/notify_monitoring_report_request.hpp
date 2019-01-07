@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -29,7 +24,7 @@ struct MonitoringDataType
 {
     ComponentType component;
     VariableType variable;
-    std::vector<VariableMonitoringType> variableMonitoring;
+    schema_array<VariableMonitoringType,65536,1> variableMonitoring;
 
     template<typename Archive>
     void serialize(Archive& archive)
@@ -43,7 +38,7 @@ struct MonitoringDataType
 struct NotifyMonitoringReportRequest
 {
     date_time generatedAt;
-    std::vector<MonitoringDataType> monitor;
+    schema_array<MonitoringDataType,65536,1> monitor;
     optional<int> requestId;
     int seqNo;
     schema_boolean tbc;

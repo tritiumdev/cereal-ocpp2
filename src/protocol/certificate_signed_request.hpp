@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -32,7 +27,7 @@ struct CertificateSignedRequest
         V2GCertificate);
     using TypeOfCertificateTypeEnum=schema_enum_value<TypeOfCertificateType>;
 
-    std::vector<schema_string<800>> cert;
+    schema_array<schema_string<800>, 65536, 1>> cert;
     optional<TypeOfCertificateTypeEnum> typeOfCertificate;
 
     template<typename Archive>

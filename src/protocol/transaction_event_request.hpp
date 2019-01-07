@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -107,7 +102,7 @@ struct TransactionEventRequest
     TransactionEventEnumType eventType;
     optional<EVSEType> evse;
     optional<IdTokenType> idToken;
-    optional<std::vector<MeterValueType>> meterValue;
+    optional<schema_array<MeterValueType,65536,1>> meterValue;
     optional<int> numberOfPhasesUsed;
     optional<schema_boolean> offline;
     optional<int> reservationId;

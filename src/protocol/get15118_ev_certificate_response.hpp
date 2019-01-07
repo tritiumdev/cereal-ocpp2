@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -33,7 +28,7 @@ using n15118EVCertificateStatusEnumType=schema_enum_value<n15118EVCertificateSta
 struct CertificateChainType
 {
     schema_string<800> certificate;
-    optional<std::vector<schema_string<800>>> childCertificate;
+    optional<schema_array<schema_string<800>, 4, 1>>> childCertificate;
 
     template<typename Archive>
     void serialize(Archive& archive)

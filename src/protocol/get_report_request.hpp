@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -34,8 +29,8 @@ using ComponentCriterionEnumType=schema_enum_value<ComponentCriterionEnum>;
 
 struct GetReportRequest
 {
-    optional<std::vector<ComponentCriterionEnumType>> componentCriteria;
-    optional<std::vector<ComponentVariableType>> componentVariable;
+    optional<schema_array<ComponentCriterionEnumType,4,1>> componentCriteria;
+    optional<schema_array<ComponentVariableType,65536,1>> componentVariable;
     optional<int> requestId;
 
     template<typename Archive>

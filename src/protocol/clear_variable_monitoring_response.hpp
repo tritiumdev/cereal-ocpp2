@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -46,7 +41,7 @@ struct ClearMonitoringResultType
 
 struct ClearVariableMonitoringResponse
 {
-    std::vector<ClearMonitoringResultType> clearMonitoringResult;
+    schema_array<ClearMonitoringResultType,65536,1> clearMonitoringResult;
 
     template<typename Archive>
     void serialize(Archive& archive)

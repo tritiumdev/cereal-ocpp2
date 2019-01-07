@@ -11,16 +11,11 @@
 *     --include="../cereal/cereal_ext.hpp"
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
+*     --include="../cereal/schema_array.hpp"
 *     --include="../cereal/rfc3339_string.hpp"
 *
 */
 
-#include <cereal/types/vector.hpp>
-#include "../cereal/cereal_ext.hpp"
-#include "../cereal/schema_enum.hpp"
-#include "../cereal/schema_string.hpp"
-#include "../cereal/rfc3339_string.hpp"
-#include <vector>
 #include "./common.hpp"
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -28,7 +23,7 @@ namespace lgpl3 { namespace ocpp20 {
 struct ReportChargingProfilesRequest
 {
     ChargingLimitSourceEnumType chargingLimitSource;
-    std::vector<ChargingProfileType> chargingProfile;
+    schema_array<ChargingProfileType,65536,1> chargingProfile;
     int evseId;
     optional<int> requestId;
     optional<schema_boolean> tbc;
