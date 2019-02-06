@@ -55,7 +55,7 @@ Please install these dependencies.
 
 ### Debian
 
-pip install compile-tools
+pip install compiletools
 
 apt-get install libcereal-dev libstdc++-6-dev libboost-test1.62-dev
 
