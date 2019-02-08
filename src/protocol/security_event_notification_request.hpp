@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -43,7 +43,7 @@ struct SecurityEventNotificationRequest
         InvalidTLSCipherSuite);
     using TypeTypeEnum=schema_enum_value<TypeType>;
 
-    date_time timestamp;
+    schema_date_time timestamp;
     TypeTypeEnum type;
 
     template<typename Archive>

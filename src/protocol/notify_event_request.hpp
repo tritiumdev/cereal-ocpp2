@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -35,7 +35,7 @@ struct EventDataType
     int eventId;
     optional<schema_string<50>> techCode;
     optional<schema_string<500>> techInfo;
-    date_time timestamp;
+    schema_date_time timestamp;
     EventTriggerEnumType trigger;
     VariableType variable;
     optional<VariableMonitoringType> variableMonitoringEvent;
@@ -60,7 +60,7 @@ struct EventDataType
 struct NotifyEventRequest
 {
     schema_array<EventDataType,65536,1> eventData;
-    date_time generatedAt;
+    schema_date_time generatedAt;
     int seqNo;
     schema_boolean tbc;
 

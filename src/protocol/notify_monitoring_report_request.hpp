@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -37,7 +37,7 @@ struct MonitoringDataType
 
 struct NotifyMonitoringReportRequest
 {
-    date_time generatedAt;
+    schema_date_time generatedAt;
     schema_array<MonitoringDataType,65536,1> monitor;
     optional<int> requestId;
     int seqNo;

@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -96,7 +96,7 @@ struct ReportDataType
 
 struct NotifyReportRequest
 {
-    date_time generatedAt;
+    schema_date_time generatedAt;
     schema_array<ReportDataType,65536,1> reportData;
     optional<int> requestId;
     int seqNo;

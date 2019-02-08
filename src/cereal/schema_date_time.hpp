@@ -7,17 +7,17 @@ namespace cereal {
 
 namespace time = lgpl3::ocpp20::time;
 
-class rfc3339_string
+class schema_data_time
 {
 public:
-    rfc3339_string()
+    schema_data_time()
         : time_point_{true}
     {}
 
-    rfc3339_string(const rfc3339_string& that) = default;
-    rfc3339_string& operator=(const rfc3339_string& that) = default;
-    rfc3339_string(rfc3339_string&& that) = default;
-    rfc3339_string& operator=(rfc3339_string&& that) = default;
+    schema_data_time(const schema_data_time& that) = default;
+    schema_data_time& operator=(const schema_data_time& that) = default;
+    schema_data_time(schema_data_time&& that) = default;
+    schema_data_time& operator=(schema_data_time&& that) = default;
 
     void set_now()
     {

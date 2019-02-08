@@ -57,7 +57,7 @@ class Object:
                 if "maxLength" in desc.keys():
                     output_struct_bot += "    %s %s;\n" %(optional("schema_string<%i>" %desc["maxLength"], required), name)
                 elif "format" in desc.keys() and desc["format"] == "date-time":
-                    output_struct_bot += "    %s %s;\n" %(optional("date_time", required), name)
+                    output_struct_bot += "    %s %s;\n" %(optional("schema_date_time", required), name)
                 elif "enum" in desc.keys():
                     enum_name=digit_prefix(upper_first(name) + "TypeEnum")
                     output_struct_top += self.__enum_payload(enum_name, desc)
@@ -180,7 +180,7 @@ class HeaderFile:
         self.file.write("using schema_array=cereal::schema_array<Type,MaxSize, MinSize>;\n\n")
         self.file.write("template<typename SchemaSet>\n")
         self.file.write("using schema_enum_value=cereal::schema_enum_value<SchemaSet>;\n\n")
-        self.file.write("using date_time=cereal::rfc3339_string;\n\n")
+        self.file.write("using schema_date_time=cereal::schema_data_time;\n\n")
         self.file.write("using schema_boolean=cereal::schema_boolean;\n\n")
 
 

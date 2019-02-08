@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -21,7 +21,7 @@
 #include "../cereal/schema_enum.hpp"
 #include "../cereal/schema_string.hpp"
 #include "../cereal/schema_array.hpp"
-#include "../cereal/rfc3339_string.hpp"
+#include "../cereal/schema_date_time.hpp"
 #include <vector>
 
 namespace lgpl3 { namespace ocpp20 { 
@@ -38,7 +38,7 @@ using schema_array=cereal::schema_array<Type,MaxSize, MinSize>;
 template<typename SchemaSet>
 using schema_enum_value=cereal::schema_enum_value<SchemaSet>;
 
-using date_time=cereal::rfc3339_string;
+using schema_date_time=cereal::schema_data_time;
 
 using schema_boolean=cereal::schema_boolean;
 
@@ -259,10 +259,10 @@ struct ChargingSchedulePeriodType
 struct ChargingScheduleType
 {
     ChargingRateUnitEnumType chargingRateUnit;
-    optional<schema_array<ChargingSchedulePeriodType,65536,1>> chargingSchedulePeriod;
+    schema_array<ChargingSchedulePeriodType,65536,1> chargingSchedulePeriod;
     optional<int> duration;
     optional<double> minChargingRate;
-    optional<date_time> startSchedule;
+    optional<schema_date_time> startSchedule;
 
     template<typename Archive>
     void serialize(Archive& archive)
@@ -285,8 +285,8 @@ struct ChargingProfileType
     optional<RecurrencyKindEnumType> recurrencyKind;
     int stackLevel;
     optional<schema_string<36>> transactionId;
-    optional<date_time> validFrom;
-    optional<date_time> validTo;
+    optional<schema_date_time> validFrom;
+    optional<schema_date_time> validTo;
 
     template<typename Archive>
     void serialize(Archive& archive)
@@ -377,7 +377,7 @@ struct MessageContentType
 
 struct IdTokenInfoType
 {
-    optional<date_time> cacheExpiryDateTime;
+    optional<schema_date_time> cacheExpiryDateTime;
     optional<int> chargingPriority;
     optional<GroupIdTokenType> groupIdToken;
     optional<schema_string<8>> language1;
@@ -401,11 +401,11 @@ struct IdTokenInfoType
 struct MessageInfoType
 {
     optional<ComponentType> display;
-    optional<date_time> endDateTime;
+    optional<schema_date_time> endDateTime;
     int id;
     MessageContentType message;
     MessagePriorityEnumType priority;
-    optional<date_time> startDateTime;
+    optional<schema_date_time> startDateTime;
     optional<MessageStateEnumType> state;
     optional<schema_string<36>> transactionId;
 
@@ -498,7 +498,7 @@ struct SampledValueType
 struct MeterValueType
 {
     schema_array<SampledValueType,65536,1> sampledValue;
-    date_time timestamp;
+    schema_date_time timestamp;
 
     template<typename Archive>
     void serialize(Archive& archive)

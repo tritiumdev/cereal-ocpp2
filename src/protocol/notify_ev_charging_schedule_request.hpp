@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -24,7 +24,7 @@ struct NotifyEVChargingScheduleRequest
 {
     ChargingScheduleType chargingSchedule;
     int evseId;
-    date_time timeBase;
+    schema_date_time timeBase;
 
     template<typename Archive>
     void serialize(Archive& archive)

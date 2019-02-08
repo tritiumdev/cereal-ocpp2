@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -28,7 +28,7 @@ using GetCompositeScheduleStatusEnumType=schema_enum_value<GetCompositeScheduleS
 struct CompositeScheduleType
 {
     optional<ChargingScheduleType> chargingSchedule;
-    optional<date_time> startDateTime;
+    optional<schema_date_time> startDateTime;
 
     template<typename Archive>
     void serialize(Archive& archive)

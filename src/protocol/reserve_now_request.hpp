@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -49,7 +49,7 @@ struct ReservationType
 {
     optional<ConnectorEnumType> connectorCode;
     EVSEType evse;
-    date_time expiryDateTime;
+    schema_date_time expiryDateTime;
     int id;
 
     template<typename Archive>

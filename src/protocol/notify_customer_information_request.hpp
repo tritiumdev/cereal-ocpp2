@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -23,7 +23,7 @@ namespace lgpl3 { namespace ocpp20 {
 struct NotifyCustomerInformationRequest
 {
     schema_string<512> data;
-    date_time generatedAt;
+    schema_date_time generatedAt;
     optional<int> requestId;
     int seqNo;
     schema_boolean tbc;

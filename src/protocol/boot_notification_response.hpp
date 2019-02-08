@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -28,7 +28,7 @@ struct BootNotificationResponse
         Rejected);
     using StatusTypeEnum=schema_enum_value<StatusType>;
 
-    date_time currentTime;
+    schema_date_time currentTime;
     int interval;
     StatusTypeEnum status;
 

@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -22,7 +22,7 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct HeartbeatResponse
 {
-    date_time currentTime;
+    schema_date_time currentTime;
 
     template<typename Archive>
     void serialize(Archive& archive)

@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -27,8 +27,8 @@ using LogEnumType=schema_enum_value<LogEnum>;
 
 struct LogParametersType
 {
-    optional<date_time> latestTimestamp;
-    optional<date_time> oldestTimestamp;
+    optional<schema_date_time> latestTimestamp;
+    optional<schema_date_time> oldestTimestamp;
     schema_string<512> remoteLocation;
 
     template<typename Archive>

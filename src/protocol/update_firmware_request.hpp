@@ -12,7 +12,7 @@
 *     --include="../cereal/schema_enum.hpp"
 *     --include="../cereal/schema_string.hpp"
 *     --include="../cereal/schema_array.hpp"
-*     --include="../cereal/rfc3339_string.hpp"
+*     --include="../cereal/schema_date_time.hpp"
 *
 */
 
@@ -22,9 +22,9 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct FirmwareType
 {
-    optional<date_time> installDateTime;
+    optional<schema_date_time> installDateTime;
     schema_string<512> location;
-    date_time retrieveDateTime;
+    schema_date_time retrieveDateTime;
     optional<schema_string<800>> signature;
     optional<schema_string<800>> signingCertificate;
 

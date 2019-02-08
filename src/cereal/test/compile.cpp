@@ -8,7 +8,7 @@
 #include "../schema_string.hpp"
 #include "../schema_array.hpp"
 #include "../schema_enum.hpp"
-#include "../rfc3339_string.hpp"
+#include "../schema_date_time.hpp"
 
 
 SCHEMA_ENUM(fruit, apple, banana, orange);
@@ -57,7 +57,7 @@ struct test
 
 int main()
 {
-    cereal::rfc3339_string rs;
+    cereal::schema_data_time rs;
     std::stringstream stream;
     {
         cereal::JSONOutputArchive archive( stream );
