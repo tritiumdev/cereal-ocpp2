@@ -31,8 +31,16 @@ based on the OCPP 1.6J security related extensions.
 This directory contains extensions and additions to the cereal namespace that
 are used as part of the automated generation of the serialization library
 contained in this project. Note this code makes use of
-std::experimental::optional to deal with the optional nature of some fields in
-the OCPP 2.0 specification.
+std::experimental::optional (which is std::optional in C++17 with little alteration) 
+to deal with the optional nature of some fields in the OCPP 2.0 specification.
+
+In time there will be detailed examples of how this works, and what the recommended 
+style of coding is for both decoding remote messages and encoding your own to send...
+
+(just try/catch around decode - you could probably do the same around encode, but
+if you write your code well you won't have to do this (i.e. just catch all encoding
+exceptions during testing)) - people will probably have different thoughts about  
+this.
 
 ## time
 
