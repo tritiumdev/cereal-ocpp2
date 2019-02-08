@@ -4,7 +4,7 @@
 *
 * This file is auto generated using this exact command:
 *     ../../generator/scripts/schema-to-cpp-header2.py
-*     --input-dir=../../schemas/schemas
+*     --input-dir=../../schemas/20
 *     --namespace=lgpl3
 *     --namespace=ocpp20
 *     --include=<cereal/types/vector.hpp>
