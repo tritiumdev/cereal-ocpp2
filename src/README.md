@@ -19,7 +19,7 @@ Note that the generator script takes care to ensure compilation is alway success
 and that the code is generated in a minimalistic fashion. For example code is only
 placed in protocol/common.hpp if it used in more than one request or response.
 Otherwise, code or objects specific to a request or response are found only in the 
-corresponding protocol header that makes use of it.
+corresponding protocol header that makes use of them.
 
 ## protocol16ext
 
