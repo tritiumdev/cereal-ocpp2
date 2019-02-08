@@ -10,19 +10,21 @@ A brief description of the contents of each subdirectory.
 ## protocol
 
 This directory contains the automatically generated cereal based expression of
-the OCPP 2.0 specification. It is generated in an automated fashion by running
-the following command within the protocol directory itself:
+the OCPP 2.0 specification. It is generated in an automated fashion by running 
+the generator script - see generator/scripts/schema-to-cpp-header2.py. The command
+that was run to generate the source code is always captured in a comment inside
+the generated code - look at for example protocol/common.hpp to get the idea.
 
-  ../../generator/scripts/schema-to-cpp-header2.py
-    --input-dir=../../schemas  
-    --namespace=lgpl3
-    --namespace=ocpp20
-    --include="<cereal/types/vector.hpp>"  
-    --include="\"../cereal/cereal_ext.hpp\""  
-    --include="\"../cereal/schema_enum.hpp\""
-    --include="\"../cereal/schema_string.hpp\""
-    --include="\"../cereal/schema_array.hpp\""
-    --include="\"../cereal/rfc_3339.hpp\""
+Note that the generator script takes care to ensure compilation is alway successful,
+and that the code is generated in a minimalistic fashion. For example code is only
+placed in protocol/common.hpp if it used in more than one request or response.
+Otherwise, code/objects specific to a request or response is found only in the 
+corresponding protocol header that makes use of it.
+
+## protocol16ext
+
+As in the protocol directory (see notes above), but the code here is generated
+based on the OCPP 1.6J security related extensions.
 
 ## cereal
 
