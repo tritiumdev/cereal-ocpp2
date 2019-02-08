@@ -46,6 +46,10 @@ for input_file in args.input:
     scheme = ocpp2_schema.Scheme()
     
     master_name = schema["$id"].split(":")[-1]
+    # 1.6 ext related..
+    master_name = master_name.replace(".req", "Request")
+    master_name = master_name.replace(".conf", "Response")
+
     if "properties" not in schema.keys(): schema["properties"] = {}
 
     candidates = [] 
@@ -166,6 +170,8 @@ args.include = ["\"./common.hpp\""]
 for input_file,scheme in sorted(schemes.items()):
     
     output_file = os.path.basename(input_file).split("_")[0]
+    # this next split is only necessary for 1.6 extensions
+    output_file = output_file.split(".")[0]
     output_file = camel_to_underscore(output_file) + ".hpp"
         
     output_file = ocpp2_schema.HeaderFile(output_file, args.namespace, args.include)
