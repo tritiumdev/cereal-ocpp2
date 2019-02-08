@@ -13,23 +13,8 @@ This library is actually not complete.
    needs to become a fleshed out struct instead of an alias for the native
    boolean type.
 
- - Some of the arrays in the OCPP 2.0 schema have min and max length. This is
-   not enforced, but could be easily, by just wrapping a vector and making it
-   serializable.. something like this:
-
-   template<size_t MinElems=1, size_MaxElems=4>
-   struct size_restricted_vector
-   {
-       // put cereal helper functions in here... enforcing Min and Max elems
-   private:
-       vector<...> value_;
-   };
-
- - Probably a few more little issues related to proper expression of the spec.
-
  - More thoroughly worked examples showing how the optional fields works and 
    how this code can be deployed into a working product.
-
 
 ## On the auto generation Python side:
 
@@ -45,4 +30,4 @@ This is more of a wish list
     - Check encoding/decoding correctness - go for maximum coverage.
     - Check exceptions are thrown on invalid enum types.
 
-
+  - 1.6J generator
