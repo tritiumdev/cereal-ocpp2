@@ -21,6 +21,12 @@ placed in protocol/common.hpp if it used in more than one request or response.
 Otherwise, code or objects specific to a request or response are found only in the 
 corresponding protocol header that makes use of them.
 
+## protocol16
+
+As in the protocol directory (see notes above), but the code here is generated
+based on the OCPP 1.6J specification.
+
+
 ## protocol16ext
 
 As in the protocol directory (see notes above), but the code here is generated
