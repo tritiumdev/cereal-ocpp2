@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -21,6 +20,9 @@ def optional(string, required):
 def ref_to_type(ref):
     return ref.split("/")[-1]
 
+def upper_first(s):
+    return s[0].upper() + s[1:]
+
 def munge_enum(s, sep="    "):
     #s = s.replace("-", "_1_")
     #s = s.replace(".", "_2_")
@@ -36,9 +38,11 @@ class Object:
         self.__dict__.update( kwargs )
         self.struct_depends = []
         self.payload = ""
+        self.name = upper_first(self.name)
         self.__do_work()
 
     def __do_work(self):
+        self.name = upper_first(self.name)
         output_struct_top="struct %s\n" %self.name
         output_struct_top += "{\n"
         request_name = self.request_name()
@@ -52,11 +56,15 @@ class Object:
             required = name in self.attributes["required"] if "required" in self.attributes.keys() else False
             if len(desc) == 0:
                 output_struct_bot += "    %s %s;\n" %(optional("std::string", required), name)
-            elif "$ref" in desc:
+            elif "$ref" in desc: # 2.0, 1.6ext
                 member_struct = ref_to_type(desc["$ref"])
                 # hacky filter just for enum types
                 if member_struct.find("EnumType") == -1: 
                     self.struct_depends.append(member_struct)
+                output_struct_bot += "    %s %s;\n" %(optional(digit_prefix(member_struct),required), name)
+            elif desc["type"] == "object":
+                member_struct = upper_first(name)
+                self.struct_depends.append(member_struct)
                 output_struct_bot += "    %s %s;\n" %(optional(digit_prefix(member_struct),required), name)
             elif desc["type"] == "string":
                 if "maxLength" in desc.keys():
@@ -67,6 +75,11 @@ class Object:
                     enum_name=digit_prefix(upper_first(name) + "TypeEnum")
                     output_struct_top += self.__enum_payload(enum_name, desc)
                     output_struct_bot += "    %s %s;\n" %(optional(enum_name,required), name)
+                elif "format" in desc.keys() and desc["format"] == "uri":
+                    output_struct_bot += "    %s %s;\n" %(optional("std::string ", required), name)
+                elif len(desc) == 1:
+                    # any length string!
+                    output_struct_bot += "    %s %s;\n" %(optional("std::string ", required), name)
                 else:
                     raise Exception("unknown string type")
             elif desc["type"] == "array":
@@ -98,6 +111,11 @@ class Object:
                         output_struct_bot += "    %s %s;\n" %(optional("schema_array<int,%i,%i>" %(max_items,min_items), required), name)
                     elif desc["items"]["type"] == "number":
                         output_struct_bot += "    %s %s;\n" %(optional("schema_array<double,%i,%i>" %(max_items,min_items), required), name)
+                    elif desc["items"]["type"] == "object":
+                        # no name object
+                        member_struct = upper_first(name) + "Entry";
+                        self.struct_depends.append(member_struct)
+                        output_struct_bot += "    %s %s;\n" %(optional("schema_array<%s,%i,%i>" %(member_struct,max_items,min_items), required), name)
                     else:
                         raise Exception("unhandled type array output: %s" %desc["items"]["type"])
                 else:
@@ -110,6 +128,7 @@ class Object:
                output_struct_bot += "    %s %s;\n" %(optional("schema_boolean",required), name)
             else:
                 raise Exception("unknown!")
+
 
         output_struct_bot += "\n"
 
@@ -125,9 +144,10 @@ class Object:
 
     def request_name(self):
         """
-        Returns a valid string if self.name is determined to determined to be the
-        name of request, otherwise returns an empty string. This is for packing the
-        Action in the call request, in the RPC framework.
+        Returns a valid string if self.name is determined to be the
+        name of a request, otherwise returns an empty string.
+        This is for packing the Action in the call request, in the 
+        RPC framework.
         """
         if self.name[-7:] == "Request": return self.name[:-7]
         return ""

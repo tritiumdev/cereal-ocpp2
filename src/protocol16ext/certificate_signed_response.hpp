@@ -3,7 +3,7 @@
 /**
 *
 * This file is auto generated using this exact command:
-*     ../../generator/scripts/schema-to-cpp-header2.py
+*     ../../generator/20/schema-to-cpp-header2.py
 *     --input-dir=../../schemas/16ext
 *     --namespace=lgpl3
 *     --namespace=ocpp16ext
