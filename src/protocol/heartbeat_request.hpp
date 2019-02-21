@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct HeartbeatRequest
 {
+    static const char* action() { return "Heartbeat"; }
+
 
     template<typename Archive>
     void serialize(Archive& archive)

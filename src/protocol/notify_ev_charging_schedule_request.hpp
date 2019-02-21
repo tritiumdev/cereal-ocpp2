@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct NotifyEVChargingScheduleRequest
 {
+    static const char* action() { return "NotifyEVChargingSchedule"; }
+
     ChargingScheduleType chargingSchedule;
     int evseId;
     schema_date_time timeBase;

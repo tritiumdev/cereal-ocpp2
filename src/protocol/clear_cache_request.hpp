@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ClearCacheRequest
 {
+    static const char* action() { return "ClearCache"; }
+
 
     template<typename Archive>
     void serialize(Archive& archive)

@@ -37,6 +37,8 @@ struct MonitoringDataType
 
 struct NotifyMonitoringReportRequest
 {
+    static const char* action() { return "NotifyMonitoringReport"; }
+
     schema_date_time generatedAt;
     schema_array<MonitoringDataType,65536,1> monitor;
     optional<int> requestId;

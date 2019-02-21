@@ -28,6 +28,8 @@ using MonitoringCriterionEnumType=schema_enum_value<MonitoringCriterionEnum>;
 
 struct GetMonitoringReportRequest
 {
+    static const char* action() { return "GetMonitoringReport"; }
+
     optional<schema_array<ComponentVariableType,65536,1>> componentVariable;
     optional<schema_array<MonitoringCriterionEnumType,3,1>> monitoringCriteria;
     optional<int> requestId;

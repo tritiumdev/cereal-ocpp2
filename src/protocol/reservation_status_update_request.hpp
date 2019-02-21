@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ReservationStatusUpdateRequest
 {
+    static const char* action() { return "ReservationStatusUpdate"; }
+
     SCHEMA_ENUM(ReservationUpdateStatusType,\
         Expired,\
         Removed);

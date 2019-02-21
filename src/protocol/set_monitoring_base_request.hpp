@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct SetMonitoringBaseRequest
 {
+    static const char* action() { return "SetMonitoringBase"; }
+
     SCHEMA_ENUM(MonitoringBaseType,\
         All,\
         FactoryDefault,\

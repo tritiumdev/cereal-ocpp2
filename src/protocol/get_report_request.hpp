@@ -29,6 +29,8 @@ using ComponentCriterionEnumType=schema_enum_value<ComponentCriterionEnum>;
 
 struct GetReportRequest
 {
+    static const char* action() { return "GetReport"; }
+
     optional<schema_array<ComponentCriterionEnumType,4,1>> componentCriteria;
     optional<schema_array<ComponentVariableType,65536,1>> componentVariable;
     optional<int> requestId;

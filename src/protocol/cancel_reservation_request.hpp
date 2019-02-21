@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct CancelReservationRequest
 {
+    static const char* action() { return "CancelReservation"; }
+
     int reservationId;
 
     template<typename Archive>

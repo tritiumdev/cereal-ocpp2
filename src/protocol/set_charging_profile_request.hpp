@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct SetChargingProfileRequest
 {
+    static const char* action() { return "SetChargingProfile"; }
+
     ChargingProfileType chargingProfile;
     int evseId;
 

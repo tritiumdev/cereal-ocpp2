@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct LogStatusNotificationRequest
 {
+    static const char* action() { return "LogStatusNotification"; }
+
     SCHEMA_ENUM(StatusType,\
         BadMessage,\
         Idle,\

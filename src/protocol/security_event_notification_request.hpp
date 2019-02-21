@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct SecurityEventNotificationRequest
 {
+    static const char* action() { return "SecurityEventNotification"; }
+
     SCHEMA_ENUM(TypeType,\
         FirmwareUpdated,\
         FailedToAuthenticateAtCsms,\

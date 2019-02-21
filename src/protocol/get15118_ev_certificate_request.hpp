@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct Get15118EVCertificateRequest
 {
+    static const char* action() { return "Get15118EVCertificate"; }
+
     optional<schema_string<50>> n15118SchemaVersion;
     schema_string<5500> exiRequest;
 

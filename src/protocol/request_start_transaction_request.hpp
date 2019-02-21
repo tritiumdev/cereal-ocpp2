@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct RequestStartTransactionRequest
 {
+    static const char* action() { return "RequestStartTransaction"; }
+
     optional<ChargingProfileType> chargingProfile;
     optional<int> evseId;
     IdTokenType idToken;

@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct GetInstalledCertificateIdsRequest
 {
+    static const char* action() { return "GetInstalledCertificateIds"; }
+
     SCHEMA_ENUM(TypeOfCertificateType,\
         V2GRootCertficate,\
         MORootCertificate,\

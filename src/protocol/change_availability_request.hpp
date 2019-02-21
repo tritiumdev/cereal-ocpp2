@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ChangeAvailabilityRequest
 {
+    static const char* action() { return "ChangeAvailability"; }
+
     SCHEMA_ENUM(OperationalStatusType,\
         Inoperative,\
         Operative);

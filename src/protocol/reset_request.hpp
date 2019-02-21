@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ResetRequest
 {
+    static const char* action() { return "Reset"; }
+
     SCHEMA_ENUM(TypeType,\
         Immediate,\
         OnIdle);

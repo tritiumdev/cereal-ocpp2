@@ -41,6 +41,11 @@ class Object:
     def __do_work(self):
         output_struct_top="struct %s\n" %self.name
         output_struct_top += "{\n"
+        request_name = self.request_name()
+        if (request_name):
+            output_struct_top += "    static const char* action() { return \"%s\"; }\n" %request_name
+            output_struct_top += "\n"
+
         output_struct_bot = ""
         for name, desc in sorted(self.attributes["properties"].items()):
             name = digit_prefix(name)
@@ -117,6 +122,15 @@ class Object:
         output_struct_bot += "};\n\n"
 
         self.payload = output_struct_top + output_struct_bot
+
+    def request_name(self):
+        """
+        Returns a valid string if self.name is determined to determined to be the
+        name of request, otherwise returns an empty string. This is for packing the
+        Action in the call request, in the RPC framework.
+        """
+        if self.name[-7:] == "Request": return self.name[:-7]
+        return ""
 
     def __enum_payload(self, enum_name, desc):
         ret = ""

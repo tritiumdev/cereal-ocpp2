@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ClearDisplayMessageRequest
 {
+    static const char* action() { return "ClearDisplayMessage"; }
+
     int id;
 
     template<typename Archive>

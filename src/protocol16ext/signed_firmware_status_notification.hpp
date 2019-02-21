@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp16ext {
 
 struct SignedFirmwareStatusNotificationRequest
 {
+    static const char* action() { return "SignedFirmwareStatusNotification"; }
+
     SCHEMA_ENUM(StatusType,\
         CertificateVerified,\
         Downloaded,\

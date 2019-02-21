@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct PublishFirmwareStatusNotificationRequest
 {
+    static const char* action() { return "PublishFirmwareStatusNotification"; }
+
     SCHEMA_ENUM(StatusType,\
         Downloaded,\
         DownloadFailed,\

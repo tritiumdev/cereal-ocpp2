@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct StatusNotificationRequest
 {
+    static const char* action() { return "StatusNotification"; }
+
     SCHEMA_ENUM(ConnectorStatusType,\
         Available,\
         Occupied,\

@@ -41,6 +41,8 @@ struct FirmwareType
 
 struct SignedUpdateFirmwareRequest
 {
+    static const char* action() { return "SignedUpdateFirmware"; }
+
     FirmwareType firmware;
     int requestId;
     optional<int> retries;

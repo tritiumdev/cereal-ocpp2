@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct UnlockConnectorRequest
 {
+    static const char* action() { return "UnlockConnector"; }
+
     int connectorId;
     int evseId;
 

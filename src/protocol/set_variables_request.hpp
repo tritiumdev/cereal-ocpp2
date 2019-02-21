@@ -39,6 +39,8 @@ struct SetVariableDataType
 
 struct SetVariablesRequest
 {
+    static const char* action() { return "SetVariables"; }
+
     schema_array<SetVariableDataType,65536,1> setVariableData;
 
     template<typename Archive>

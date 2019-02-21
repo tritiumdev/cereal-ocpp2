@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct GetCompositeScheduleRequest
 {
+    static const char* action() { return "GetCompositeSchedule"; }
+
     SCHEMA_ENUM(ChargingRateUnitType,\
         W,\
         A);

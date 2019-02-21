@@ -64,6 +64,8 @@ struct ReservationType
 
 struct ReserveNowRequest
 {
+    static const char* action() { return "ReserveNow"; }
+
     optional<IdTokenType> groupIdToken;
     IdTokenType idToken;
     ReservationType reservation;

@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct SignCertificateRequest
 {
+    static const char* action() { return "SignCertificate"; }
+
     SCHEMA_ENUM(TypeOfCertificateType,\
         ChargingStationCertificate,\
         V2GCertificate);

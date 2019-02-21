@@ -41,6 +41,8 @@ struct FirmwareType
 
 struct UpdateFirmwareRequest
 {
+    static const char* action() { return "UpdateFirmware"; }
+
     FirmwareType firmware;
     int requestId;
     optional<int> retries;

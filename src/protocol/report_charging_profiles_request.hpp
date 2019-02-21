@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ReportChargingProfilesRequest
 {
+    static const char* action() { return "ReportChargingProfiles"; }
+
     ChargingLimitSourceEnumType chargingLimitSource;
     schema_array<ChargingProfileType,65536,1> chargingProfile;
     int evseId;

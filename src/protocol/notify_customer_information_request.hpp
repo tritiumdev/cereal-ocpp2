@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct NotifyCustomerInformationRequest
 {
+    static const char* action() { return "NotifyCustomerInformation"; }
+
     schema_string<512> data;
     schema_date_time generatedAt;
     optional<int> requestId;

@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ClearVariableMonitoringRequest
 {
+    static const char* action() { return "ClearVariableMonitoring"; }
+
     schema_array<int,65536,1> id;
 
     template<typename Archive>

@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct GetBaseReportRequest
 {
+    static const char* action() { return "GetBaseReport"; }
+
     SCHEMA_ENUM(ReportBaseType,\
         ConfigurationInventory,\
         FullInventory,\

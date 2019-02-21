@@ -98,6 +98,8 @@ struct TransactionType
 
 struct TransactionEventRequest
 {
+    static const char* action() { return "TransactionEvent"; }
+
     optional<double> cableMaxCurrent;
     TransactionEventEnumType eventType;
     optional<EVSEType> evse;

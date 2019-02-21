@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct CustomerInformationRequest
 {
+    static const char* action() { return "CustomerInformation"; }
+
     schema_boolean clear;
     optional<CertificateHashDataType> customerCertificate;
     optional<schema_string<64>> customerIdentifier;

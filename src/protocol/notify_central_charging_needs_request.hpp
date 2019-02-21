@@ -129,6 +129,8 @@ struct SAScheduleType
 
 struct NotifyCentralChargingNeedsRequest
 {
+    static const char* action() { return "NotifyCentralChargingNeeds"; }
+
     int evseId;
     schema_array<SAScheduleType,3,1> saSchedule;
 

@@ -126,6 +126,8 @@ struct NetworkConnectionProfileType
 
 struct SetNetworkProfileRequest
 {
+    static const char* action() { return "SetNetworkProfile"; }
+
     int configurationSlot;
     NetworkConnectionProfileType connectionData;
 

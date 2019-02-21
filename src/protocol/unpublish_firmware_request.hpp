@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct UnpublishFirmwareRequest
 {
+    static const char* action() { return "UnpublishFirmware"; }
+
     schema_string<32> checksum;
 
     template<typename Archive>

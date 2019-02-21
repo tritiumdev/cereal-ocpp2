@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp16ext {
 
 struct SignCertificateRequest
 {
+    static const char* action() { return "SignCertificate"; }
+
     schema_string<5500> csr;
 
     template<typename Archive>

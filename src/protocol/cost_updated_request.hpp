@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct CostUpdatedRequest
 {
+    static const char* action() { return "CostUpdated"; }
+
     double totalCost;
     schema_string<36> transactionId;
 

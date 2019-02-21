@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct PublishFirmwareRequest
 {
+    static const char* action() { return "PublishFirmware"; }
+
     schema_string<32> checksum;
     schema_string<512> location;
     optional<int> retries;

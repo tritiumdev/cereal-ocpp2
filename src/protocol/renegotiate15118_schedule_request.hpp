@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct Renegotiate15118ScheduleRequest
 {
+    static const char* action() { return "Renegotiate15118Schedule"; }
+
     EVSEType evse;
 
     template<typename Archive>

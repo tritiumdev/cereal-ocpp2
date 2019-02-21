@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct SetDisplayMessageRequest
 {
+    static const char* action() { return "SetDisplayMessage"; }
+
     MessageInfoType message;
 
     template<typename Archive>

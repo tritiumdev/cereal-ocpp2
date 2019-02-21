@@ -34,6 +34,8 @@ using MessageTriggerEnumType=schema_enum_value<MessageTriggerEnum>;
 
 struct TriggerMessageRequest
 {
+    static const char* action() { return "TriggerMessage"; }
+
     optional<EVSEType> evse;
     MessageTriggerEnumType requestedMessage;
 

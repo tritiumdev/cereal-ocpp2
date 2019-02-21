@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct GetLocalListVersionRequest
 {
+    static const char* action() { return "GetLocalListVersion"; }
+
 
     template<typename Archive>
     void serialize(Archive& archive)

@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct GetDisplayMessagesRequest
 {
+    static const char* action() { return "GetDisplayMessages"; }
+
     SCHEMA_ENUM(PriorityType,\
         AlwaysFront,\
         InFront,\

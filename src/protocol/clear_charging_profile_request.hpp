@@ -37,6 +37,8 @@ struct ClearChargingProfileType
 
 struct ClearChargingProfileRequest
 {
+    static const char* action() { return "ClearChargingProfile"; }
+
     optional<ClearChargingProfileType> chargingProfile;
     optional<int> evseId;
 

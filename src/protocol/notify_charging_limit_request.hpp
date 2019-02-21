@@ -35,6 +35,8 @@ struct ChargingLimitType
 
 struct NotifyChargingLimitRequest
 {
+    static const char* action() { return "NotifyChargingLimit"; }
+
     ChargingLimitType chargingLimit;
     optional<schema_array<ChargingScheduleType,65536,1>> chargingSchedule;
     optional<int> evseId;

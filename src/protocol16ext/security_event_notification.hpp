@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp16ext {
 
 struct SecurityEventNotificationRequest
 {
+    static const char* action() { return "SecurityEventNotification"; }
+
     schema_date_time timestamp;
     schema_string<50> type;
 

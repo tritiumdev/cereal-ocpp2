@@ -40,6 +40,8 @@ struct AuthorizationData
 
 struct SendLocalListRequest
 {
+    static const char* action() { return "SendLocalList"; }
+
     optional<schema_array<AuthorizationData,65536,1>> localAuthorizationList;
     UpdateEnumType updateType;
     int versionNumber;

@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct DeleteCertificateRequest
 {
+    static const char* action() { return "DeleteCertificate"; }
+
     CertificateHashDataType certificateHashData;
 
     template<typename Archive>

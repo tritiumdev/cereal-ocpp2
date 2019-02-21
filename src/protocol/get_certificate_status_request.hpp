@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct GetCertificateStatusRequest
 {
+    static const char* action() { return "GetCertificateStatus"; }
+
     OCSPRequestDataType ocspRequestData;
 
     template<typename Archive>

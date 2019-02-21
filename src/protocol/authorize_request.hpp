@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct AuthorizeRequest
 {
+    static const char* action() { return "Authorize"; }
+
     optional<schema_array<OCSPRequestDataType,4,1>> n15118CertificateHashData;
     optional<schema_array<int,65536,1>> evseId;
     IdTokenType idToken;

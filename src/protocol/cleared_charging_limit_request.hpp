@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct ClearedChargingLimitRequest
 {
+    static const char* action() { return "ClearedChargingLimit"; }
+
     SCHEMA_ENUM(ChargingLimitSourceType,\
         EMS,\
         Other,\

@@ -45,6 +45,8 @@ struct SetMonitoringDataType
 
 struct SetVariableMonitoringRequest
 {
+    static const char* action() { return "SetVariableMonitoring"; }
+
     schema_array<SetMonitoringDataType,65536,1> setMonitoringData;
 
     template<typename Archive>

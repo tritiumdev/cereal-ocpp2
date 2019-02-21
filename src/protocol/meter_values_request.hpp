@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct MeterValuesRequest
 {
+    static const char* action() { return "MeterValues"; }
+
     int evseId;
     schema_array<MeterValueType,65536,1> meterValue;
 

@@ -90,6 +90,8 @@ struct ChargingNeedsType
 
 struct NotifyEVChargingNeedsRequest
 {
+    static const char* action() { return "NotifyEVChargingNeeds"; }
+
     ChargingNeedsType chargingNeeds;
     int evseId;
     optional<int> maxScheduleTuples;

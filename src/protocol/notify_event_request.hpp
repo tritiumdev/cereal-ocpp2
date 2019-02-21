@@ -59,6 +59,8 @@ struct EventDataType
 
 struct NotifyEventRequest
 {
+    static const char* action() { return "NotifyEvent"; }
+
     schema_array<EventDataType,65536,1> eventData;
     schema_date_time generatedAt;
     int seqNo;

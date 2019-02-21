@@ -66,6 +66,8 @@ struct ChargingStationType
 
 struct BootNotificationRequest
 {
+    static const char* action() { return "BootNotification"; }
+
     ChargingStationType chargingStation;
     BootReasonEnumType reason;
 

@@ -96,6 +96,8 @@ struct ReportDataType
 
 struct NotifyReportRequest
 {
+    static const char* action() { return "NotifyReport"; }
+
     schema_date_time generatedAt;
     schema_array<ReportDataType,65536,1> reportData;
     optional<int> requestId;

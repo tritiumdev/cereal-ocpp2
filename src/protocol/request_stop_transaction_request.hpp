@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct RequestStopTransactionRequest
 {
+    static const char* action() { return "RequestStopTransaction"; }
+
     schema_string<36> transactionId;
 
     template<typename Archive>

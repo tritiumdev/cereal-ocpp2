@@ -37,6 +37,8 @@ struct GetVariableDataType
 
 struct GetVariablesRequest
 {
+    static const char* action() { return "GetVariables"; }
+
     schema_array<GetVariableDataType,65536,1> getVariableData;
 
     template<typename Archive>

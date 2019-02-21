@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct SetMonitoringLevelRequest
 {
+    static const char* action() { return "SetMonitoringLevel"; }
+
     int severity;
 
     template<typename Archive>

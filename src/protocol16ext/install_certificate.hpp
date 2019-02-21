@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp16ext {
 
 struct InstallCertificateRequest
 {
+    static const char* action() { return "InstallCertificate"; }
+
     SCHEMA_ENUM(CertificateTypeType,\
         CentralSystemRootCertificate,\
         ManufacturerRootCertificate);

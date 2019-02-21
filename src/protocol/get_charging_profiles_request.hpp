@@ -39,6 +39,8 @@ struct ChargingProfileCriterionType
 
 struct GetChargingProfilesRequest
 {
+    static const char* action() { return "GetChargingProfiles"; }
+
     ChargingProfileCriterionType chargingProfile;
     optional<int> evseId;
     optional<int> requestId;

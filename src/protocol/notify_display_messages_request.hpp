@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct NotifyDisplayMessagesRequest
 {
+    static const char* action() { return "NotifyDisplayMessages"; }
+
     schema_array<MessageInfoType,65536,1> messageInfo;
     int requestId;
     schema_boolean tbc;

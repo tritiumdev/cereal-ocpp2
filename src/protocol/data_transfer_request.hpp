@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct DataTransferRequest
 {
+    static const char* action() { return "DataTransfer"; }
+
     optional<std::string> data;
     optional<schema_string<50>> messageId;
     schema_string<255> vendorId;

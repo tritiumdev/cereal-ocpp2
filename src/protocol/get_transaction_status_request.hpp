@@ -22,6 +22,8 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct GetTransactionStatusRequest
 {
+    static const char* action() { return "GetTransactionStatus"; }
+
     optional<schema_string<36>> transactionId;
 
     template<typename Archive>

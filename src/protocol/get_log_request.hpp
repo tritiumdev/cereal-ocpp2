@@ -42,6 +42,8 @@ struct LogParametersType
 
 struct GetLogRequest
 {
+    static const char* action() { return "GetLog"; }
+
     LogParametersType log;
     LogEnumType logType;
     int requestId;

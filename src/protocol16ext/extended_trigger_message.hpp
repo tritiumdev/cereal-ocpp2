@@ -32,6 +32,8 @@ using MessageTriggerEnumType=schema_enum_value<MessageTriggerEnum>;
 
 struct ExtendedTriggerMessageRequest
 {
+    static const char* action() { return "ExtendedTriggerMessage"; }
+
     optional<int> connectorId;
     MessageTriggerEnumType requestedMessage;
 
