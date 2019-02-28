@@ -30,4 +30,3 @@ This is more of a wish list
     - Check encoding/decoding correctness - go for maximum coverage.
     - Check exceptions are thrown on invalid enum types.
 
-  - 1.6J generator
