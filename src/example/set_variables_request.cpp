@@ -1,5 +1,6 @@
-#include <cereal/cereal.hpp>
-#include <cereal/archives/json.hpp>
+//#include <cereal/cereal.hpp>
+//#include <cereal/archives/json.hpp>
+#include "../cereal/no_pretty_json.hpp"
 #include <sstream>
 #include "../protocol/set_variables_request.hpp"
 int main()

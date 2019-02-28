@@ -11,7 +11,7 @@ A brief description of the contents of each subdirectory.
 
 This directory contains the automatically generated cereal based expression of
 the OCPP 2.0 specification. It is generated in an automated fashion by running 
-the generator script - see generator/scripts/schema-to-cpp-header2.py. The command
+the generator script - see generator/20/schema-to-cpp-header2.py. The command
 that was run to generate the source code is always captured in a comment inside
 the generated code - look at for example protocol/common.hpp to get the idea.
 
@@ -25,7 +25,6 @@ corresponding protocol header that makes use of them.
 
 As in the protocol directory (see notes above), but the code here is generated
 based on the OCPP 1.6J specification.
-
 
 ## protocol16ext
 
