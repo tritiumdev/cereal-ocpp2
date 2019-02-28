@@ -22,28 +22,28 @@ namespace lgpl3 { namespace ocpp16 {
 
 struct CsChargingProfiles
 {
-    SCHEMA_ENUM(ChargingProfileKindType,\
+    SCHEMA_ENUM(ChargingProfileKind,\
         Absolute,\
         Recurring,\
         Relative);
-    using ChargingProfileKindTypeEnum=schema_enum_value<ChargingProfileKindType>;
+    using ChargingProfileKindEnum=schema_enum_value<ChargingProfileKind>;
 
-    SCHEMA_ENUM(ChargingProfilePurposeType,\
+    SCHEMA_ENUM(ChargingProfilePurpose,\
         ChargePointMaxProfile,\
         TxDefaultProfile,\
         TxProfile);
-    using ChargingProfilePurposeTypeEnum=schema_enum_value<ChargingProfilePurposeType>;
+    using ChargingProfilePurposeEnum=schema_enum_value<ChargingProfilePurpose>;
 
-    SCHEMA_ENUM(RecurrencyKindType,\
+    SCHEMA_ENUM(RecurrencyKind,\
         Daily,\
         Weekly);
-    using RecurrencyKindTypeEnum=schema_enum_value<RecurrencyKindType>;
+    using RecurrencyKindEnum=schema_enum_value<RecurrencyKind>;
 
     int chargingProfileId;
-    ChargingProfileKindTypeEnum chargingProfileKind;
-    ChargingProfilePurposeTypeEnum chargingProfilePurpose;
+    ChargingProfileKindEnum chargingProfileKind;
+    ChargingProfilePurposeEnum chargingProfilePurpose;
     ChargingSchedule chargingSchedule;
-    optional<RecurrencyKindTypeEnum> recurrencyKind;
+    optional<RecurrencyKindEnum> recurrencyKind;
     int stackLevel;
     optional<int> transactionId;
     optional<schema_date_time> validFrom;

@@ -24,17 +24,17 @@ struct InstallCertificateRequest
 {
     static const char* action() { return "InstallCertificate"; }
 
-    SCHEMA_ENUM(CertificateTypeType,\
+    SCHEMA_ENUM(CertificateType,\
         V2GRootCertficate,\
         MORootCertificate,\
         CSOSubCA1,\
         CSOSubCA2,\
         CSMSRootCertificate,\
         ManufacturerRootCertificate);
-    using CertificateTypeTypeEnum=schema_enum_value<CertificateTypeType>;
+    using CertificateTypeEnum=schema_enum_value<CertificateType>;
 
     schema_string<800> certificate;
-    CertificateTypeTypeEnum certificateType;
+    CertificateTypeEnum certificateType;
 
     template<typename Archive>
     void serialize(Archive& archive)

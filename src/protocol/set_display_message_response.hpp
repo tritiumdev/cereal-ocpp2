@@ -22,16 +22,16 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct SetDisplayMessageResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         NotSupportedMessageFormat,\
         Rejected,\
         NotSupportedPriority,\
         NotSupportedState,\
         UnknownTransaction);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

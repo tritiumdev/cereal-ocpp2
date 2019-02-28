@@ -64,7 +64,7 @@ class Object:
                 elif "format" in desc.keys() and desc["format"] == "date-time":
                     output_struct_bot += "    %s %s;\n" %(optional("schema_date_time", required), name)
                 elif "enum" in desc.keys():
-                    enum_name=digit_prefix(upper_first(name) + "TypeEnum")
+                    enum_name=digit_prefix(upper_first(name) + "Enum")
                     output_struct_top += self.__enum_payload(enum_name, desc)
                     output_struct_bot += "    %s %s;\n" %(optional(enum_name,required), name)
                 else:
@@ -90,7 +90,7 @@ class Object:
                     else:
                         raise Exception("Unknown string type in array")
                 elif "enum" in desc.keys():
-                    enum_name=digit_prefix(upper_first(name) + "TypeEnum")
+                    enum_name=digit_prefix(upper_first(name) + "Enum")
                     output_struct_top += self.__enum_payload(enum_name, desc)
                     output_struct_bot += "    %s %s;\n" %(optional(enum_name,required), name)
                 elif "type" in desc["items"].keys():

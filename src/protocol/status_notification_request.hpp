@@ -24,16 +24,16 @@ struct StatusNotificationRequest
 {
     static const char* action() { return "StatusNotification"; }
 
-    SCHEMA_ENUM(ConnectorStatusType,\
+    SCHEMA_ENUM(ConnectorStatus,\
         Available,\
         Occupied,\
         Reserved,\
         Unavailable,\
         Faulted);
-    using ConnectorStatusTypeEnum=schema_enum_value<ConnectorStatusType>;
+    using ConnectorStatusEnum=schema_enum_value<ConnectorStatus>;
 
     int connectorId;
-    ConnectorStatusTypeEnum connectorStatus;
+    ConnectorStatusEnum connectorStatus;
     int evseId;
     schema_date_time timestamp;
 

@@ -22,13 +22,13 @@ namespace lgpl3 { namespace ocpp16ext {
 
 struct DeleteCertificateResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Failed,\
         NotFound);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

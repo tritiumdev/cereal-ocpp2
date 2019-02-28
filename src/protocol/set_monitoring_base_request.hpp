@@ -24,13 +24,13 @@ struct SetMonitoringBaseRequest
 {
     static const char* action() { return "SetMonitoringBase"; }
 
-    SCHEMA_ENUM(MonitoringBaseType,\
+    SCHEMA_ENUM(MonitoringBase,\
         All,\
         FactoryDefault,\
         None);
-    using MonitoringBaseTypeEnum=schema_enum_value<MonitoringBaseType>;
+    using MonitoringBaseEnum=schema_enum_value<MonitoringBase>;
 
-    MonitoringBaseTypeEnum monitoringBase;
+    MonitoringBaseEnum monitoringBase;
 
     template<typename Archive>
     void serialize(Archive& archive)

@@ -24,12 +24,12 @@ struct GetCompositeScheduleRequest
 {
     static const char* action() { return "GetCompositeSchedule"; }
 
-    SCHEMA_ENUM(ChargingRateUnitType,\
+    SCHEMA_ENUM(ChargingRateUnit,\
         W,\
         A);
-    using ChargingRateUnitTypeEnum=schema_enum_value<ChargingRateUnitType>;
+    using ChargingRateUnitEnum=schema_enum_value<ChargingRateUnit>;
 
-    optional<ChargingRateUnitTypeEnum> chargingRateUnit;
+    optional<ChargingRateUnitEnum> chargingRateUnit;
     int duration;
     int evseId;
 

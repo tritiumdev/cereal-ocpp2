@@ -24,12 +24,12 @@ struct ResetRequest
 {
     static const char* action() { return "Reset"; }
 
-    SCHEMA_ENUM(TypeType,\
+    SCHEMA_ENUM(Type,\
         Immediate,\
         OnIdle);
-    using TypeTypeEnum=schema_enum_value<TypeType>;
+    using TypeEnum=schema_enum_value<Type>;
 
-    TypeTypeEnum type;
+    TypeEnum type;
 
     template<typename Archive>
     void serialize(Archive& archive)

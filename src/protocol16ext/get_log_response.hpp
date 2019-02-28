@@ -22,14 +22,14 @@ namespace lgpl3 { namespace ocpp16ext {
 
 struct GetLogResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Rejected,\
         AcceptedCanceled);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     optional<schema_string<255>> filename;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

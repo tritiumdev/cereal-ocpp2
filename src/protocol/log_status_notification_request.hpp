@@ -24,7 +24,7 @@ struct LogStatusNotificationRequest
 {
     static const char* action() { return "LogStatusNotification"; }
 
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         BadMessage,\
         Idle,\
         NotSupportedOperation,\
@@ -32,10 +32,10 @@ struct LogStatusNotificationRequest
         Uploaded,\
         UploadFailure,\
         Uploading);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     int requestId;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

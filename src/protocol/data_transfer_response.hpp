@@ -22,15 +22,15 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct DataTransferResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Rejected,\
         UnknownMessageId,\
         UnknownVendorId);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     optional<std::string> data;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

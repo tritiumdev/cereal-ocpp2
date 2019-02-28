@@ -24,13 +24,13 @@ struct ReservationStatusUpdateRequest
 {
     static const char* action() { return "ReservationStatusUpdate"; }
 
-    SCHEMA_ENUM(ReservationUpdateStatusType,\
+    SCHEMA_ENUM(ReservationUpdateStatus,\
         Expired,\
         Removed);
-    using ReservationUpdateStatusTypeEnum=schema_enum_value<ReservationUpdateStatusType>;
+    using ReservationUpdateStatusEnum=schema_enum_value<ReservationUpdateStatus>;
 
     int reservationId;
-    ReservationUpdateStatusTypeEnum reservationUpdateStatus;
+    ReservationUpdateStatusEnum reservationUpdateStatus;
 
     template<typename Archive>
     void serialize(Archive& archive)

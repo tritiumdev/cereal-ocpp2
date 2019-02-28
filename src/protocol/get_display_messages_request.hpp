@@ -24,23 +24,23 @@ struct GetDisplayMessagesRequest
 {
     static const char* action() { return "GetDisplayMessages"; }
 
-    SCHEMA_ENUM(PriorityType,\
+    SCHEMA_ENUM(Priority,\
         AlwaysFront,\
         InFront,\
         NormalCycle);
-    using PriorityTypeEnum=schema_enum_value<PriorityType>;
+    using PriorityEnum=schema_enum_value<Priority>;
 
-    SCHEMA_ENUM(StateType,\
+    SCHEMA_ENUM(State,\
         Charging,\
         Faulted,\
         Idle,\
         Unavailable);
-    using StateTypeEnum=schema_enum_value<StateType>;
+    using StateEnum=schema_enum_value<State>;
 
     optional<schema_array<int,65536,1>> id;
-    optional<PriorityTypeEnum> priority;
+    optional<PriorityEnum> priority;
     int requestId;
-    optional<StateTypeEnum> state;
+    optional<StateEnum> state;
 
     template<typename Archive>
     void serialize(Archive& archive)

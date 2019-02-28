@@ -37,7 +37,7 @@ struct StopTransactionRequest
 {
     static const char* action() { return "StopTransaction"; }
 
-    SCHEMA_ENUM(ReasonType,\
+    SCHEMA_ENUM(Reason,\
         EmergencyStop,\
         EVDisconnected,\
         HardReset,\
@@ -49,11 +49,11 @@ struct StopTransactionRequest
         SoftReset,\
         UnlockCommand,\
         DeAuthorized);
-    using ReasonTypeEnum=schema_enum_value<ReasonType>;
+    using ReasonEnum=schema_enum_value<Reason>;
 
     optional<schema_string<20>> idTag;
     int meterStop;
-    optional<ReasonTypeEnum> reason;
+    optional<ReasonEnum> reason;
     schema_date_time timestamp;
     optional<schema_array<TransactionDataEntry,65536,0>> transactionData;
     int transactionId;

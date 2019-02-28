@@ -24,13 +24,13 @@ struct ClearChargingProfileRequest
 {
     static const char* action() { return "ClearChargingProfile"; }
 
-    SCHEMA_ENUM(ChargingProfilePurposeType,\
+    SCHEMA_ENUM(ChargingProfilePurpose,\
         ChargePointMaxProfile,\
         TxDefaultProfile,\
         TxProfile);
-    using ChargingProfilePurposeTypeEnum=schema_enum_value<ChargingProfilePurposeType>;
+    using ChargingProfilePurposeEnum=schema_enum_value<ChargingProfilePurpose>;
 
-    optional<ChargingProfilePurposeTypeEnum> chargingProfilePurpose;
+    optional<ChargingProfilePurposeEnum> chargingProfilePurpose;
     optional<int> connectorId;
     optional<int> id;
     optional<int> stackLevel;

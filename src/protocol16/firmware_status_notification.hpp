@@ -24,7 +24,7 @@ struct FirmwareStatusNotificationRequest
 {
     static const char* action() { return "FirmwareStatusNotification"; }
 
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Downloaded,\
         DownloadFailed,\
         Downloading,\
@@ -32,9 +32,9 @@ struct FirmwareStatusNotificationRequest
         InstallationFailed,\
         Installing,\
         Installed);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

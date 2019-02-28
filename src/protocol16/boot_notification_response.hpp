@@ -22,15 +22,15 @@ namespace lgpl3 { namespace ocpp16 {
 
 struct BootNotificationResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Pending,\
         Rejected);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     schema_date_time currentTime;
     double interval;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

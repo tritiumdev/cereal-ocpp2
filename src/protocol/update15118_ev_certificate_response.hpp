@@ -22,13 +22,13 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct Update15118EVCertificateResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Failed);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     optional<schema_string<5500>> exiResponse;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

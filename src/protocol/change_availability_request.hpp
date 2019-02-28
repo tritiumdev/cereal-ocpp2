@@ -24,13 +24,13 @@ struct ChangeAvailabilityRequest
 {
     static const char* action() { return "ChangeAvailability"; }
 
-    SCHEMA_ENUM(OperationalStatusType,\
+    SCHEMA_ENUM(OperationalStatus,\
         Inoperative,\
         Operative);
-    using OperationalStatusTypeEnum=schema_enum_value<OperationalStatusType>;
+    using OperationalStatusEnum=schema_enum_value<OperationalStatus>;
 
     int evseId;
-    OperationalStatusTypeEnum operationalStatus;
+    OperationalStatusEnum operationalStatus;
 
     template<typename Archive>
     void serialize(Archive& archive)

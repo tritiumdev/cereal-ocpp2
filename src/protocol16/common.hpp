@@ -59,12 +59,12 @@ struct ChargingSchedulePeriodEntry
 
 struct ChargingSchedule
 {
-    SCHEMA_ENUM(ChargingRateUnitType,\
+    SCHEMA_ENUM(ChargingRateUnit,\
         A,\
         W);
-    using ChargingRateUnitTypeEnum=schema_enum_value<ChargingRateUnitType>;
+    using ChargingRateUnitEnum=schema_enum_value<ChargingRateUnit>;
 
-    ChargingRateUnitTypeEnum chargingRateUnit;
+    ChargingRateUnitEnum chargingRateUnit;
     schema_array<ChargingSchedulePeriodEntry,65536,0> chargingSchedulePeriod;
     optional<int> duration;
     optional<double> minChargingRate;
@@ -83,17 +83,17 @@ struct ChargingSchedule
 
 struct IdTagInfo
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Blocked,\
         Expired,\
         Invalid,\
         ConcurrentTx);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     optional<schema_date_time> expiryDate;
     optional<schema_string<20>> parentIdTag;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)
@@ -106,7 +106,7 @@ struct IdTagInfo
 
 struct SampledValueEntry
 {
-    SCHEMA_ENUM(ContextType,\
+    SCHEMA_ENUM(Context,\
         Interruption.Begin,\
         Interruption.End,\
         Sample.Clock,\
@@ -115,22 +115,22 @@ struct SampledValueEntry
         Transaction.End,\
         Trigger,\
         Other);
-    using ContextTypeEnum=schema_enum_value<ContextType>;
+    using ContextEnum=schema_enum_value<Context>;
 
-    SCHEMA_ENUM(FormatType,\
+    SCHEMA_ENUM(Format,\
         Raw,\
         SignedData);
-    using FormatTypeEnum=schema_enum_value<FormatType>;
+    using FormatEnum=schema_enum_value<Format>;
 
-    SCHEMA_ENUM(LocationType,\
+    SCHEMA_ENUM(Location,\
         Cable,\
         EV,\
         Inlet,\
         Outlet,\
         Body);
-    using LocationTypeEnum=schema_enum_value<LocationType>;
+    using LocationEnum=schema_enum_value<Location>;
 
-    SCHEMA_ENUM(MeasurandType,\
+    SCHEMA_ENUM(Measurand,\
         Energy.Active.Export.Register,\
         Energy.Active.Import.Register,\
         Energy.Reactive.Export.Register,\
@@ -153,9 +153,9 @@ struct SampledValueEntry
         Temperature,\
         SoC,\
         RPM);
-    using MeasurandTypeEnum=schema_enum_value<MeasurandType>;
+    using MeasurandEnum=schema_enum_value<Measurand>;
 
-    SCHEMA_ENUM(PhaseType,\
+    SCHEMA_ENUM(Phase,\
         L1,\
         L2,\
         L3,\
@@ -166,9 +166,9 @@ struct SampledValueEntry
         L1-L2,\
         L2-L3,\
         L3-L1);
-    using PhaseTypeEnum=schema_enum_value<PhaseType>;
+    using PhaseEnum=schema_enum_value<Phase>;
 
-    SCHEMA_ENUM(UnitType,\
+    SCHEMA_ENUM(Unit,\
         Wh,\
         kWh,\
         varh,\
@@ -185,14 +185,14 @@ struct SampledValueEntry
         Celcius,\
         Fahrenheit,\
         Percent);
-    using UnitTypeEnum=schema_enum_value<UnitType>;
+    using UnitEnum=schema_enum_value<Unit>;
 
-    optional<ContextTypeEnum> context;
-    optional<FormatTypeEnum> format;
-    optional<LocationTypeEnum> location;
-    optional<MeasurandTypeEnum> measurand;
-    optional<PhaseTypeEnum> phase;
-    optional<UnitTypeEnum> unit;
+    optional<ContextEnum> context;
+    optional<FormatEnum> format;
+    optional<LocationEnum> location;
+    optional<MeasurandEnum> measurand;
+    optional<PhaseEnum> phase;
+    optional<UnitEnum> unit;
     std::string  value;
 
     template<typename Archive>

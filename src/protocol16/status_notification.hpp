@@ -24,7 +24,7 @@ struct StatusNotificationRequest
 {
     static const char* action() { return "StatusNotification"; }
 
-    SCHEMA_ENUM(ErrorCodeType,\
+    SCHEMA_ENUM(ErrorCode,\
         ConnectorLockFailure,\
         EVCommunicationError,\
         GroundFailure,\
@@ -41,9 +41,9 @@ struct StatusNotificationRequest
         UnderVoltage,\
         OverVoltage,\
         WeakSignal);
-    using ErrorCodeTypeEnum=schema_enum_value<ErrorCodeType>;
+    using ErrorCodeEnum=schema_enum_value<ErrorCode>;
 
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Available,\
         Preparing,\
         Charging,\
@@ -53,12 +53,12 @@ struct StatusNotificationRequest
         Reserved,\
         Unavailable,\
         Faulted);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     int connectorId;
-    ErrorCodeTypeEnum errorCode;
+    ErrorCodeEnum errorCode;
     optional<schema_string<50>> info;
-    StatusTypeEnum status;
+    StatusEnum status;
     optional<schema_date_time> timestamp;
     optional<schema_string<50>> vendorErrorCode;
     optional<schema_string<255>> vendorId;

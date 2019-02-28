@@ -24,7 +24,7 @@ struct SignedFirmwareStatusNotificationRequest
 {
     static const char* action() { return "SignedFirmwareStatusNotification"; }
 
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         CertificateVerified,\
         Downloaded,\
         DownloadFailed,\
@@ -43,10 +43,10 @@ struct SignedFirmwareStatusNotificationRequest
         RevokedCertificate,\
         PublishFailed,\
         SignatureVerified);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     int requestId;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

@@ -24,7 +24,7 @@ struct SecurityEventNotificationRequest
 {
     static const char* action() { return "SecurityEventNotification"; }
 
-    SCHEMA_ENUM(TypeType,\
+    SCHEMA_ENUM(Type,\
         FirmwareUpdated,\
         FailedToAuthenticateAtCsms,\
         CsmsFailedToAuthenticate,\
@@ -43,10 +43,10 @@ struct SecurityEventNotificationRequest
         InvalidChargingStationCertificate,\
         InvalidTLSVersion,\
         InvalidTLSCipherSuite);
-    using TypeTypeEnum=schema_enum_value<TypeType>;
+    using TypeEnum=schema_enum_value<Type>;
 
     schema_date_time timestamp;
-    TypeTypeEnum type;
+    TypeEnum type;
 
     template<typename Archive>
     void serialize(Archive& archive)

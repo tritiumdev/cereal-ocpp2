@@ -24,14 +24,14 @@ struct ClearedChargingLimitRequest
 {
     static const char* action() { return "ClearedChargingLimit"; }
 
-    SCHEMA_ENUM(ChargingLimitSourceType,\
+    SCHEMA_ENUM(ChargingLimitSource,\
         EMS,\
         Other,\
         SO,\
         CSO);
-    using ChargingLimitSourceTypeEnum=schema_enum_value<ChargingLimitSourceType>;
+    using ChargingLimitSourceEnum=schema_enum_value<ChargingLimitSource>;
 
-    ChargingLimitSourceTypeEnum chargingLimitSource;
+    ChargingLimitSourceEnum chargingLimitSource;
     optional<int> evseId;
 
     template<typename Archive>

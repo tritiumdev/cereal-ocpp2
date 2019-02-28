@@ -22,15 +22,15 @@ namespace lgpl3 { namespace ocpp16 {
 
 struct GetCompositeScheduleResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Rejected);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
     optional<ChargingSchedule> chargingSchedule;
     optional<int> connectorId;
     optional<schema_date_time> scheduleStart;
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)

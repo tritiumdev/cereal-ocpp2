@@ -24,13 +24,13 @@ struct ChangeAvailabilityRequest
 {
     static const char* action() { return "ChangeAvailability"; }
 
-    SCHEMA_ENUM(TypeType,\
+    SCHEMA_ENUM(Type,\
         Inoperative,\
         Operative);
-    using TypeTypeEnum=schema_enum_value<TypeType>;
+    using TypeEnum=schema_enum_value<Type>;
 
     int connectorId;
-    TypeTypeEnum type;
+    TypeEnum type;
 
     template<typename Archive>
     void serialize(Archive& archive)

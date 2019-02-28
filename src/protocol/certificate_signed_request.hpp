@@ -24,13 +24,13 @@ struct CertificateSignedRequest
 {
     static const char* action() { return "CertificateSigned"; }
 
-    SCHEMA_ENUM(TypeOfCertificateType,\
+    SCHEMA_ENUM(TypeOfCertificate,\
         ChargingStationCertificate,\
         V2GCertificate);
-    using TypeOfCertificateTypeEnum=schema_enum_value<TypeOfCertificateType>;
+    using TypeOfCertificateEnum=schema_enum_value<TypeOfCertificate>;
 
     schema_array<schema_string<800>, 65536, 1>> cert;
-    optional<TypeOfCertificateTypeEnum> typeOfCertificate;
+    optional<TypeOfCertificateEnum> typeOfCertificate;
 
     template<typename Archive>
     void serialize(Archive& archive)

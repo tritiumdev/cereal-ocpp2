@@ -22,15 +22,15 @@ namespace lgpl3 { namespace ocpp16 {
 
 struct IdTagInfo
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Blocked,\
         Expired,\
         Invalid,\
         ConcurrentTx);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
-    StatusTypeEnum status;
+    StatusEnum status;
 
     template<typename Archive>
     void serialize(Archive& archive)
@@ -56,14 +56,14 @@ struct SendLocalListRequest
 {
     static const char* action() { return "SendLocalList"; }
 
-    SCHEMA_ENUM(UpdateTypeType,\
+    SCHEMA_ENUM(UpdateType,\
         Differential,\
         Full);
-    using UpdateTypeTypeEnum=schema_enum_value<UpdateTypeType>;
+    using UpdateTypeEnum=schema_enum_value<UpdateType>;
 
     int listVersion;
     optional<schema_array<LocalAuthorizationListEntry,65536,0>> localAuthorizationList;
-    UpdateTypeTypeEnum updateType;
+    UpdateTypeEnum updateType;
 
     template<typename Archive>
     void serialize(Archive& archive)

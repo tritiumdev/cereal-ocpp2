@@ -24,17 +24,17 @@ struct TriggerMessageRequest
 {
     static const char* action() { return "TriggerMessage"; }
 
-    SCHEMA_ENUM(RequestedMessageType,\
+    SCHEMA_ENUM(RequestedMessage,\
         BootNotification,\
         DiagnosticsStatusNotification,\
         FirmwareStatusNotification,\
         Heartbeat,\
         MeterValues,\
         StatusNotification);
-    using RequestedMessageTypeEnum=schema_enum_value<RequestedMessageType>;
+    using RequestedMessageEnum=schema_enum_value<RequestedMessage>;
 
     optional<int> connectorId;
-    RequestedMessageTypeEnum requestedMessage;
+    RequestedMessageEnum requestedMessage;
 
     template<typename Archive>
     void serialize(Archive& archive)

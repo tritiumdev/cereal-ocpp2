@@ -22,12 +22,12 @@ namespace lgpl3 { namespace ocpp20 {
 
 struct RequestStartTransactionResponse
 {
-    SCHEMA_ENUM(StatusType,\
+    SCHEMA_ENUM(Status,\
         Accepted,\
         Rejected);
-    using StatusTypeEnum=schema_enum_value<StatusType>;
+    using StatusEnum=schema_enum_value<Status>;
 
-    StatusTypeEnum status;
+    StatusEnum status;
     optional<schema_string<36>> transactionId;
 
     template<typename Archive>

@@ -259,7 +259,7 @@ struct ChargingSchedulePeriodType
 struct ChargingScheduleType
 {
     ChargingRateUnitEnumType chargingRateUnit;
-    optional<schema_array<ChargingSchedulePeriodType,65536,1>> chargingSchedulePeriod;
+    schema_array<ChargingSchedulePeriodType,65536,1> chargingSchedulePeriod;
     optional<int> duration;
     optional<double> minChargingRate;
     optional<schema_date_time> startSchedule;

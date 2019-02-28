@@ -24,16 +24,16 @@ struct GetInstalledCertificateIdsRequest
 {
     static const char* action() { return "GetInstalledCertificateIds"; }
 
-    SCHEMA_ENUM(TypeOfCertificateType,\
+    SCHEMA_ENUM(TypeOfCertificate,\
         V2GRootCertficate,\
         MORootCertificate,\
         CSOSubCA1,\
         CSOSubCA2,\
         CSMSRootCertificate,\
         ManufacturerRootCertificate);
-    using TypeOfCertificateTypeEnum=schema_enum_value<TypeOfCertificateType>;
+    using TypeOfCertificateEnum=schema_enum_value<TypeOfCertificate>;
 
-    TypeOfCertificateTypeEnum typeOfCertificate;
+    TypeOfCertificateEnum typeOfCertificate;
 
     template<typename Archive>
     void serialize(Archive& archive)

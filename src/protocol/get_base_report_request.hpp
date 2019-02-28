@@ -24,13 +24,13 @@ struct GetBaseReportRequest
 {
     static const char* action() { return "GetBaseReport"; }
 
-    SCHEMA_ENUM(ReportBaseType,\
+    SCHEMA_ENUM(ReportBase,\
         ConfigurationInventory,\
         FullInventory,\
         SummaryInventory);
-    using ReportBaseTypeEnum=schema_enum_value<ReportBaseType>;
+    using ReportBaseEnum=schema_enum_value<ReportBase>;
 
-    ReportBaseTypeEnum reportBase;
+    ReportBaseEnum reportBase;
     int requestId;
 
     template<typename Archive>
