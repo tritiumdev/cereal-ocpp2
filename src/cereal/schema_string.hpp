@@ -56,6 +56,8 @@ struct schema_string
     // Not sure if we really need this 
     void clear() { value_.clear(); }
 
+    const std::string& to_string() const { return value_; }
+
     private:
     
     void copy(const std::string& value)

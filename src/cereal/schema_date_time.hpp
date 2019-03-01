@@ -28,7 +28,7 @@ public:
     template<typename Archive>
     std::string save_minimal(Archive& archive) const
     {
-        return time::rfc3339::to_string(time_point_);
+        return to_string();
     }
     
     template<typename Archive>
@@ -38,6 +38,10 @@ public:
         time::time_point set_to = time::rfc3339::from_string(value);
         time_point_ = set_to;
     }
+
+    const time::time_point& value() const { return time_point_; }
+
+    std::string to_string() const { return time::rfc3339::to_string(time_point_); }
 
     private:
 

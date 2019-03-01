@@ -26,10 +26,19 @@ int main()
 
     std::stringstream ss;
     {
-        cereal::JSONOutputArchive archive( ss );
+        cereal::JSONOutputArchive archive(ss);
         request.serialize(archive);
     }
-    std::cout << ss.str() << std::endl;
+
+    std::cout << "json payload: " <<  ss.str() << std::endl;
+
+    SetVariablesRequest check_request;
+    {
+        cereal::JSONInputArchive archive(ss);
+        check_request.serialize(archive);
+    }
  
+    std::cout << "Check round trip request component.name:: " 
+        << check_request.setVariableData[0].component.name.to_string() << std::endl;
     return 0;
 }

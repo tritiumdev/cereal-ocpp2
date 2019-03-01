@@ -2,7 +2,7 @@
 #include "src/unit_test.hpp"
 #include "src/cereal/schema_array.hpp"
 #include "src/cereal/cereal_ext.hpp"
-#include <cereal/archives/json.hpp>
+#include "src/cereal/no_pretty_json.hpp"
 
 namespace cereal { namespace test {
 
